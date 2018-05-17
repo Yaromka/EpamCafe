@@ -1,0 +1,15 @@
+.navbar{
+    margin-bottom: 0;
+    border-radius: 0;
+    background-color: #4273cc;
+    color:#FFF;
+    border: 0;
+}
+.nav-item .active a, .nav-item .nav-item .active a:focus,
+.nav-item .active a:hover{
+    color: #FFFFFF;
+    background-color: #4273cc;
+}
+.nav-item{
+    margin: 3px;
+}

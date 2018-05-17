@@ -1,0 +1,11 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>Welcome Tag</short-name>
+
+    <tag>
+        <name>WelcomeTag</name>
+        <tag-class>com.epam.cafe.tag.WelcomeTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+</taglib>

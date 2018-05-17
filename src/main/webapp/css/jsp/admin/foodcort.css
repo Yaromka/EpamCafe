@@ -1,0 +1,22 @@
+.table-responsive {
+    display: table;
+    align-content: center;
+}
+
+table.table-bordered{
+    border:2px solid black;
+}
+table.table-bordered > thead > tr > th{
+    border:2px solid black;
+}
+table.table-bordered > tbody > tr > td{
+    border:2px solid black;
+}
+
+body{
+    background: url("../../../img/background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
