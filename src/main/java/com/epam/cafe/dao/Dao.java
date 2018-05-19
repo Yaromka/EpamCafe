@@ -6,6 +6,6 @@ import com.epam.cafe.exception.DAOException;
 import java.util.List;
 
 public interface Dao <T extends AbstractEntity>{
-    @SuppressWarnings("unchecked")
-    List<T> getAll() throws DAOException;
+    //@SuppressWarnings("unchecked")
+    //List<T> getAll() throws DAOException;
 }

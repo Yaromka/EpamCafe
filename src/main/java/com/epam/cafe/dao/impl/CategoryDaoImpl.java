@@ -1,17 +1,17 @@
 package com.epam.cafe.dao.impl;
 
-import com.epam.cafe.builder.CategoryBuilder;
 import com.epam.cafe.connection.ConnectionProxy;
 import com.epam.cafe.dao.AbstractDao;
 import com.epam.cafe.dao.CategoryDao;
 import com.epam.cafe.entity.AbstractEntity;
 import com.epam.cafe.entity.Category;
 import com.epam.cafe.exception.DAOException;
+import com.epam.cafe.util.ResultSetConverter;
 
 import java.sql.ResultSet;
 import java.util.List;
 
-public class CategoryDaoImpl extends AbstractDao implements CategoryDao{
+public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
     private static final String FIND_CATEGORY_BY_ID = "SELECT * FROM categories WHERE category_id=?";
     private static final String FIND_ALL_CATEGORY = "SELECT * FROM categories";
     private static final String INSERT_NEW_CATEGORY = "INSERT INTO categories (category_name) VALUES(?)";
@@ -51,6 +51,12 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao{
 
     @Override
     protected AbstractEntity buildEntity(ResultSet resultSet) {
-        return new CategoryBuilder().createEntity();
+        Category category = null;
+        try {
+            category = ResultSetConverter.createCategoryEntity(resultSet);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return category;
     }
 }
