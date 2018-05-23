@@ -1,6 +1,6 @@
 package com.epam.cafe.entity;
 
-public class SignUpBean extends AbstractEntity{
+public class SignUpBean {
     private String name;
     private String surname;
     private String email;

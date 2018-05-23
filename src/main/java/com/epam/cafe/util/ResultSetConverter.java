@@ -1,6 +1,9 @@
 package com.epam.cafe.util;
 
-import com.epam.cafe.dao.*;
+import com.epam.cafe.dao.CategoryDao;
+import com.epam.cafe.dao.DaoFactory;
+import com.epam.cafe.dao.DishDao;
+import com.epam.cafe.dao.UserDao;
 import com.epam.cafe.dao.impl.CategoryDaoImpl;
 import com.epam.cafe.dao.impl.DishDaoImpl;
 import com.epam.cafe.dao.impl.UserDaoImpl;
@@ -102,10 +105,10 @@ public class ResultSetConverter {
             dish.setWeight(weight);
 
             DaoFactory daoFactory = new DaoFactory();
-            CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
             daoFactory.beginTransaction();
+            CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
             Category category = categoryDaoImpl.getById(categoryId);
-            daoFactory.close();
+            daoFactory.endTransaction();
 
             dish.setCategory(category);
             dish.setEnable(isEnable);
@@ -162,18 +165,20 @@ public class ResultSetConverter {
             }
 
             DaoFactory daoFactory = new DaoFactory();
+            daoFactory.beginTransaction();
             UserDao userDaoImpl = daoFactory.getUserDao();
             int ownerId = resultSet.getInt(ORDER_USER_ID_PARAM);
 
             User user = userDaoImpl.getById(ownerId);
-
+            daoFactory.endTransaction();
 
             order.setUser(user);
 
-            DishDao dishDaoImpl = daoFactory.getDishDao();
+            DaoFactory dishDaoFactory = new DaoFactory();
+            DishDao dishDaoImpl = dishDaoFactory.getDishDao();
 
             Map<Dish, Integer> orderDishes = dishDaoImpl.getByOrder(order);
-            daoFactory.close();
+            dishDaoFactory.endTransaction();
 
             order.setDishes(orderDishes);
         } catch (SQLException e) {

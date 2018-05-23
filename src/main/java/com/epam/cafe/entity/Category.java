@@ -1,6 +1,6 @@
 package com.epam.cafe.entity;
 
-public class Category extends AbstractEntity{
+public class Category extends AbstractEntity {
     private int id;
     private String name;
 

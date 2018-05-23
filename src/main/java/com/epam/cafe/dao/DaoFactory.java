@@ -14,35 +14,22 @@ import java.sql.SQLException;
 
 public class DaoFactory implements AutoCloseable{
     private static final Logger LOGGER = LogManager.getLogger(DaoFactory.class);
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    private ConnectionProxy connection;
+    private ConnectionProxy connection = ConnectionPool.getInstance().getConnection();
 
     public UserDao getUserDao(){
-        connection = connectionPool.getConnection();
-        UserDaoImpl userDao = new UserDaoImpl( connection);
-        userDao.setConnection(connection);
-        return userDao;
+        return new UserDaoImpl(connection);
     }
 
     public CategoryDao getCategoryDao(){
-        connection = connectionPool.getConnection();
-        CategoryDaoImpl categoryDao = new CategoryDaoImpl(connection);
-        categoryDao.setConnection(connection);
-        return categoryDao;
+        return new CategoryDaoImpl(connection);
     }
 
     public DishDao getDishDao(){
-        connection = connectionPool.getConnection();
-        DishDaoImpl dishDao = new DishDaoImpl(connection);
-        dishDao.setConnection(connection);
-        return dishDao;
+        return new DishDaoImpl(connection);
     }
 
     public OrderDao getOrderDao(){
-        connection = connectionPool.getConnection();
-        OrderDaoImpl orderDao = new OrderDaoImpl(connection);
-        orderDao.setConnection(connection);
-        return orderDao;
+        return new OrderDaoImpl(connection);
     }
 
     public void beginTransaction() {

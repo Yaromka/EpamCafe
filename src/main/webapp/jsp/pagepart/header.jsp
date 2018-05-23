@@ -23,7 +23,6 @@
 
     <!-- Custom styles for this template -->
     <link href="../../css/jsp/pagepart/header.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="../../img/icon.ico" />
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark">

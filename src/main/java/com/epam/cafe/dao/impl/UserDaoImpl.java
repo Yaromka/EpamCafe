@@ -1,7 +1,5 @@
 package com.epam.cafe.dao.impl;
 
-import com.epam.cafe.builder.EntityBuilder;
-import com.epam.cafe.builder.UserBuilder;
 import com.epam.cafe.connection.ConnectionProxy;
 import com.epam.cafe.dao.AbstractDao;
 import com.epam.cafe.dao.UserDao;
@@ -11,8 +9,14 @@ import com.epam.cafe.entity.Role;
 import com.epam.cafe.entity.User;
 import com.epam.cafe.exception.DAOException;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.epam.cafe.constants.ParameterIndexes.*;
 
 public class UserDaoImpl extends AbstractDao implements UserDao{
     private static final String FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE user_email=?";
@@ -29,72 +33,59 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
             "user_phone = ? ,user_passport = ? WHERE user_id =?";
     private static final String UPDATE_LOYALTY_POINT_BY_USER_ID = "UPDATE users SET user_loyaltyPoints = ? WHERE user_id = ?";
 
-    private ConnectionProxy connection;
-
-    public ConnectionProxy getConnection() {
-        return connection;
-    }
-
-    public void setConnection(ConnectionProxy connection) {
-        this.connection = connection;
-    }
-
     public UserDaoImpl(ConnectionProxy connection) {
-        this.connection = connection;
+        super.setConnection(connection);
     }
 
     public User create(User user) throws DAOException {
-        user.setId(getInsertId(INSERT_USER, connection, user.getName(), user.getSurname(), user.getPassport(),
+        user.setId(getInsertId(INSERT_USER, user.getName(), user.getSurname(), user.getPassport(),
                 user.getPhone(), user.getMail().toUpperCase(), user.getPassword(), Role.CLIENT.getDbId()));
         return user;
     }
 
     public User getById(Integer id) throws DAOException {
-        return (User) getSingleByParameter(FIND_USER_BY_ID, connection, id);
+        return (User) getSingleByParameter(FIND_USER_BY_ID, id);
     }
 
     @SuppressWarnings("unchecked")
     public List<User> getAll(int from, int limit) throws DAOException {
-        return executeQuery(connection, FIND_ALL_USERS, from, limit);
+        return executeQuery(FIND_ALL_USERS, from, limit);
     }
 
     public User getByEmail(String eMail) throws DAOException {
-        return (User) getSingleByParameter(FIND_USER_BY_EMAIL, connection, eMail);
+        return (User) getSingleByParameter(FIND_USER_BY_EMAIL, eMail);
     }
 
     public User getByEmailAndPassword(String eMail, String password) throws DAOException {
-        return (User) getSingleByParameter(FIND_USER_BY_EMAIL_PASSWORD, connection, eMail, password);
+        return (User) getSingleByParameter(FIND_USER_BY_EMAIL_PASSWORD, eMail, password);
     }
 
     @SuppressWarnings("unchecked")
     public List<User> getBySurname(String surname, int from, int limit) throws DAOException {
-        return executeQuery(connection, FIND_USER_BY_SURNAME, surname, from, limit);
+        return executeQuery(FIND_USER_BY_SURNAME, surname, from, limit);
     }
 
     public void updatePassword(Integer id, String password) throws DAOException {
-        executeUpdate(connection, UPDATE_USER_PASSWORD, password, id);
+        executeUpdate(UPDATE_USER_PASSWORD, password, id);
     }
 
     public void updateLoyaltyPoints(long loyaltyPoint, int userId) throws DAOException {
-        executeUpdate(connection, UPDATE_LOYALTY_POINT_BY_USER_ID, loyaltyPoint, userId);
+        executeUpdate(UPDATE_LOYALTY_POINT_BY_USER_ID, loyaltyPoint, userId);
     }
 
     public void updateUser(User user) throws DAOException {
-        executeUpdate(connection, UPDATE_USER_INFO, user.getName(), user.getSurname(), user.getMail(),
+        executeUpdate(UPDATE_USER_INFO, user.getName(), user.getSurname(), user.getMail(),
                 user.getPhone(), user.getPassport(), user.getId());
     }
 
     public int countByParameters() throws DAOException {
-        return countByParameter(connection, COUNT_ALL_USERS);
+        return countByParameter(COUNT_ALL_USERS);
     }
 
     public int countByParameters(String surname) throws DAOException {
-        return countByParameter(connection, COUNT_USERS_BY_SURNAME, surname);
+        return countByParameter(COUNT_USERS_BY_SURNAME, surname);
     }
 
-    protected EntityBuilder getBuilder() {
-        return new UserBuilder();
-    }
 
     @Override
     protected AbstractEntity buildEntity(ResultSet resultSet) {

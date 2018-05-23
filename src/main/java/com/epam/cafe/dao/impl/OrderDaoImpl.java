@@ -8,10 +8,15 @@ import com.epam.cafe.util.ResultSetConverter;
 import com.epam.cafe.exception.DAOException;
 import com.epam.cafe.util.DateTimeConverter;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.epam.cafe.constants.ParameterIndexes.*;
 
 public class OrderDaoImpl extends AbstractDao implements OrderDao{
     private static final String FIND_ALL_ORDERS = "SELECT * FROM orders limit ?,?";
@@ -41,18 +46,8 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao{
     private static final String UPDATE_PAID_STATUS = "UPDATE orders SET order_status = ? WHERE order_id = ?";
     private static final String UPDATE_REVIEW = "UPDATE orders SET order_rating = ?, order_review = ? WHERE order_id = ?";
 
-    private ConnectionProxy connection;
-
-    public ConnectionProxy getConnection() {
-        return connection;
-    }
-
-    public void setConnection(ConnectionProxy connection) {
-        this.connection = connection;
-    }
-
     public OrderDaoImpl(ConnectionProxy connection) {
-        this.connection = connection;
+        super.setConnection(connection);
     }
 
     public Order create(Order order) throws DAOException {
@@ -70,66 +65,66 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao{
             sqlStatement = INSERT_NEW_PAYED_ORDER;
         }
 
-        order.setId(getInsertId(sqlStatement, connection, orderDateString, paymentMethod, userId));
+        order.setId(getInsertId(sqlStatement, orderDateString, paymentMethod, userId));
         return order;
     }
 
     @SuppressWarnings("unchecked")
     public List<Order> getAll(int from, int limit) throws DAOException {
-        return executeQuery(connection, FIND_ALL_ORDERS, from, limit);
+        return executeQuery(FIND_ALL_ORDERS, from, limit);
     }
 
     @SuppressWarnings("unchecked")
     public List<Order> getByUserId(int id, int from, int limit) throws DAOException {
-        return executeQuery(connection, FIND_ORDERS_BY_USER, id, from, limit);
+        return executeQuery(FIND_ORDERS_BY_USER, id, from, limit);
     }
 
 
     public void updateOrderPaidStatus(Order order, OrderStatus status) throws DAOException {
-        executeUpdate(connection, UPDATE_PAID_STATUS, status.toString(), order.getId());
+        executeUpdate(UPDATE_PAID_STATUS, status.toString(), order.getId());
     }
 
 
     public void addOrderReview(int orderId, int mark, String comment) throws DAOException {
-        executeUpdate(connection, UPDATE_REVIEW, mark, comment, orderId);
+        executeUpdate(UPDATE_REVIEW, mark, comment, orderId);
     }
 
     @SuppressWarnings("unchecked")
     public List<Order> getByDatePeriod(String startDate, String endDate, int from, int limit) throws DAOException {
-        return executeQuery(connection, FIND_ORDER_BY_RECEIPT_DATE, startDate, endDate, from, limit);
+        return executeQuery(FIND_ORDER_BY_RECEIPT_DATE, startDate, endDate, from, limit);
     }
 
     @SuppressWarnings("unchecked")
     public List<Order> getByPayStatus(String payStatus, int from, int limit) throws DAOException {
-        return executeQuery(connection, FIND_ORDERS_BY_PAY_STATUS, payStatus, from, limit);
+        return executeQuery(FIND_ORDERS_BY_PAY_STATUS, payStatus, from, limit);
     }
 
     @SuppressWarnings("unchecked")
     public List<Order> getByPayStatusAndReceiptDate(String startDate, String endDate,
                                                     String payStatus, int from, int limit) throws DAOException {
 
-        return executeQuery(connection, FIND_ORDERS_BY_PAY_STATUS_AND_RECEIPT_DATE, payStatus, startDate,
+        return executeQuery(FIND_ORDERS_BY_PAY_STATUS_AND_RECEIPT_DATE, payStatus, startDate,
                 endDate, from, limit);
     }
 
     public int countByParameters(int userId) throws DAOException {
-        return countByParameter(connection, COUNT_ORDERS_BY_USER, userId);
+        return countByParameter(COUNT_ORDERS_BY_USER, userId);
     }
 
     public int countByParameters(String payStatus) throws DAOException {
-        return countByParameter(connection, COUNT_ORDERS_BY_PAY_STATUS, payStatus);
+        return countByParameter(COUNT_ORDERS_BY_PAY_STATUS, payStatus);
     }
 
     public int countByParameters() throws DAOException {
-        return countByParameter(connection, COUNT_ALL_ORDERS);
+        return countByParameter(COUNT_ALL_ORDERS);
     }
 
     public int countByParameters(String startDate, String endDate, String payStatus) throws DAOException {
-        return countByParameter(connection, COUNT_ORDERS_BY_PAY_STATUS_AND_RECEIPT_DATE, payStatus, startDate, endDate);
+        return countByParameter(COUNT_ORDERS_BY_PAY_STATUS_AND_RECEIPT_DATE, payStatus, startDate, endDate);
     }
 
     public int countByParameters(String startDate, String endDate) throws DAOException {
-        return countByParameter(connection, COUNT_ORDER_BY_RECEIPT_DATE, startDate, endDate);
+        return countByParameter(COUNT_ORDER_BY_RECEIPT_DATE, startDate, endDate);
     }
 
     @Override

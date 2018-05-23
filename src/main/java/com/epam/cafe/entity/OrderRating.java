@@ -1,6 +1,6 @@
 package com.epam.cafe.entity;
 
-public enum OrderRating{
+public enum OrderRating {
     ONE("1"),TWO("2"), THREE("3"), FOUR("4"), FIVE("5");
 
     private String value;

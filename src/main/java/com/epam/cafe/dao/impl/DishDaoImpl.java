@@ -1,22 +1,24 @@
 package com.epam.cafe.dao.impl;
 
-import com.epam.cafe.builder.DishBuilder;
-import com.epam.cafe.builder.EntityBuilder;
 import com.epam.cafe.connection.ConnectionProxy;
 import com.epam.cafe.dao.AbstractDao;
 import com.epam.cafe.dao.DishDao;
+import com.epam.cafe.util.ResultSetConverter;
 import com.epam.cafe.entity.Category;
 import com.epam.cafe.entity.Dish;
 import com.epam.cafe.entity.Order;
 import com.epam.cafe.exception.DAOException;
-import com.epam.cafe.util.ResultSetConverter;
+import com.mysql.jdbc.Statement;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.epam.cafe.constants.ParameterIndexes.*;
 
 public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
     private static final String GET_ALL = "SELECT * FROM dishes limit ?,?";
@@ -38,32 +40,22 @@ public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
             "INSERT INTO orders_has_dishes(orders_order_id, orders_has_dishes_quantity, dishes_dish_id) VALUES(?,?,?)";
     private static final String UPDATE_DISH_ENABLE_STATUS_BY_DISH_ID = "UPDATE dishes SET dish_isEnable = ? WHERE dish_id = ?";
 
-    private ConnectionProxy connection;
-
-    public ConnectionProxy getConnection() {
-        return connection;
-    }
-
-    public void setConnection(ConnectionProxy connection) {
-        this.connection = connection;
-    }
-
     public DishDaoImpl(ConnectionProxy connection) {
-        this.connection = connection;
+        super.setConnection(connection);
     }
 
     public Dish create(Dish dish) throws DAOException{
-        dish.setId(getInsertId(INSERT_NEW_DISH, connection, dish.getName(), dish.getDescription(), dish.getWeight(),
-        dish.getPicture(), dish.getPrice(), dish.getCategory().getId()));
+        dish.setId(getInsertId(INSERT_NEW_DISH, dish.getName(), dish.getDescription(), dish.getWeight(),
+                dish.getPicture(), dish.getPrice(), dish.getCategory().getId()));
         return dish;
     }
 
     public Dish getById(int id) throws DAOException {
-        return getSingleByParameter(GET_BY_ID, connection, id);
+        return getSingleByParameter(GET_BY_ID, id);
     }
 
     public List<Dish> getAll(int from, int limit) throws DAOException {
-        return executeQuery(connection, GET_ALL, from, limit);
+        return executeQuery(GET_ALL, from, limit);
     }
 
     public List<Dish> getByCategoryAndEnableStatus(Category category, Boolean enableStatus, int from, int limit)
@@ -72,18 +64,18 @@ public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
         int enableStatusForDataBase = enableStatus ? 1 : 0;
         int categoryId = category.getId();
 
-        return executeQuery(connection, GET_BY_CATEGORY_AND_ENABLE_STATUS, enableStatusForDataBase,
+        return executeQuery(GET_BY_CATEGORY_AND_ENABLE_STATUS, enableStatusForDataBase,
                 categoryId, from, limit);
     }
 
     public List<Dish> getByCategory(Category category, int from, int limit) throws DAOException {
         int categoryId = category.getId();
-        return executeQuery(connection, GET_BY_CATEGORY, categoryId, from, limit);
+        return executeQuery(GET_BY_CATEGORY, categoryId, from, limit);
     }
 
     public List<Dish> getByEnableStatus(Boolean enableStatus, int from, int limit) throws DAOException {
         int statusForDataBase = enableStatus ? 1 : 0;
-        return executeQuery(connection, GET_ALL_BY_ENABLE_STATUS, statusForDataBase, from, limit);
+        return executeQuery(GET_ALL_BY_ENABLE_STATUS, statusForDataBase, from, limit);
     }
 
     public Map<Dish, Integer> getByOrder(Order order) throws DAOException {
@@ -104,35 +96,30 @@ public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
     }
 
     public void addDishInOrder(int orderId, int dishId, int number) throws DAOException {
-        executeUpdate(connection, INSERT_DISH_IN_ORDER, orderId, number, dishId);
+        executeUpdate(INSERT_DISH_IN_ORDER, orderId, number, dishId);
     }
 
     public void updateEnableStatusByDishId(Boolean enableStatus, int dishId) throws DAOException {
         int enableStatusForDataBase = enableStatus ? 1 : 0;
-        executeUpdate(connection, UPDATE_DISH_ENABLE_STATUS_BY_DISH_ID, enableStatusForDataBase, dishId);
+        executeUpdate(UPDATE_DISH_ENABLE_STATUS_BY_DISH_ID, enableStatusForDataBase, dishId);
     }
 
     public int countNumberOfRecords() throws DAOException {
-        return countByParameter(connection, COUNT_ALL);
+        return countByParameter(COUNT_ALL);
     }
 
     public int countNumberOfRecords(Boolean enableStatus) throws DAOException {
         int enableStatusForDb = enableStatus? 1: 0;
-        return countByParameter(connection, COUNT_DISHES_BY_ENABLE_STATUS, enableStatusForDb);
+        return countByParameter(COUNT_DISHES_BY_ENABLE_STATUS, enableStatusForDb);
     }
 
     public int countNumberOfRecords(Category category, Boolean enableStatus) throws  DAOException {
         int enableStatusForDb = enableStatus? 1: 0;
-        return countByParameter(connection, COUNT_DISHES_BY_CATEGORY_AND_ENABLE_STATUS,
-                enableStatusForDb, category.getId());
+        return countByParameter(COUNT_DISHES_BY_CATEGORY_AND_ENABLE_STATUS, enableStatusForDb, category.getId());
     }
 
     public int countNumberOfRecords(Category category) throws DAOException {
-        return countByParameter(connection, COUNT_DISHES_BY_CATEGORY, category.getId());
-    }
-
-    protected EntityBuilder getBuilder() {
-        return new DishBuilder();
+        return countByParameter(COUNT_DISHES_BY_CATEGORY, category.getId());
     }
 
     @Override

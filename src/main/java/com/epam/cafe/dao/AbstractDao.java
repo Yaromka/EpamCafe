@@ -11,12 +11,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+public abstract class AbstractDao <T extends AbstractEntity> {
+    protected ConnectionProxy connection;
 
-public abstract class AbstractDao<T extends AbstractEntity> {
-
+    public void setConnection(ConnectionProxy connection) {
+        this.connection = connection;
+    }
     protected abstract T buildEntity(ResultSet resultSet);
 
-    protected List<T> getList(ConnectionProxy connection, String query) throws DAOException {
+    protected List<T> getList(String query) throws DAOException {
         List<T> list = new ArrayList<>();
         try(PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
@@ -29,7 +32,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
         return list;
     }
 
-    protected T getSingleByParameter(String query, ConnectionProxy connection, Object... args) throws DAOException{
+    protected T getSingleByParameter(String query, Object... args) throws DAOException{
         T concreteEntity = null;
         try(PreparedStatement statement = connection.prepareStatement(query)) {
             setParams(statement, args);
@@ -43,7 +46,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
         return concreteEntity;
     }
 
-    protected List<T> executeQuery(ConnectionProxy connection, String query, Object... args) throws DAOException{
+    protected List<T> executeQuery(String query, Object... args) throws DAOException{
         List<T> objectList = new ArrayList<>();
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -57,19 +60,21 @@ public abstract class AbstractDao<T extends AbstractEntity> {
         return objectList;
     }
 
-    protected void executeUpdate(ConnectionProxy connection, String query, Object... args) throws DAOException{
+    protected void executeUpdate(String query, Object... args) throws DAOException{
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            setParams(statement, args).executeUpdate();
+            setParams(statement, args);
+            statement.executeUpdate();
         } catch (SQLException e){
             throw new DAOException("An exception occurred during attempted executing query :", e);
         }
     }
 
-    protected int getInsertId(String query, ConnectionProxy connection, Object... args) throws DAOException{
+    protected int getInsertId(String query, Object... args) throws DAOException{
         Integer autoIncrementedId;
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            setParams(statement, args).executeUpdate();
+            setParams(statement, args);
+            statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
             autoIncrementedId = resultSet.getInt(1);
@@ -79,7 +84,7 @@ public abstract class AbstractDao<T extends AbstractEntity> {
         return autoIncrementedId;
     }
 
-    protected int countByParameter(ConnectionProxy connection, String query, Object... args) throws DAOException {
+    protected int countByParameter(String query, Object... args) throws DAOException {
         int numberOfRows = 0;
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {

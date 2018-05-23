@@ -3,7 +3,7 @@ package com.epam.cafe.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ShopBasket extends AbstractEntity{
+public class ShopBasket {
     private static final int MAX_BASKET_CAPACITY = 30;
     private Map<Dish, Integer> basket;
     private long basketPrice;

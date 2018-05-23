@@ -25,7 +25,6 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../../../css/jsp/client/pagepart/header.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../img/icon.ico" />
 </head>
 
 <body>

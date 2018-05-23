@@ -112,6 +112,6 @@ public class ConnectionPool {
         readWriteLock.lock();
         connectionQueue.offer(connection);
         semaphore.release();
-        readWriteLock.unlock(); // finally
+        readWriteLock.unlock();
     }
 }

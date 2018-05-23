@@ -19,7 +19,6 @@
 
     <link href="../css/jsp/login.css" rel="stylesheet">
     <title>Login Page</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../img/icon.ico" />
 
 </head>
 

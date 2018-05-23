@@ -2,6 +2,7 @@ package com.epam.cafe.service;
 
 import com.epam.cafe.dao.DaoFactory;
 import com.epam.cafe.dao.UserDao;
+import com.epam.cafe.dao.impl.UserDaoImpl;
 import com.epam.cafe.entity.User;
 import com.epam.cafe.exception.DAOException;
 import com.epam.cafe.exception.ServiceException;
@@ -12,19 +13,22 @@ public class UserService {
 
     public User logIn(String enterEmail, String enterPass) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         UserDao userDao = daoFactory.getUserDao();
+
         String email = enterEmail.toUpperCase();
         try {
             return userDao.getByEmailAndPassword(email, enterPass);
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during log in attempt: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 
     public boolean isEmailExist(String enterEmail) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         UserDao userDao = daoFactory.getUserDao();
 
         try {
@@ -33,14 +37,15 @@ public class UserService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during e-mail existence audit: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 
     public boolean signUp(User user) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
-        UserDao userDao = daoFactory.getUserDao();
         daoFactory.beginTransaction();
+        UserDao userDao = daoFactory.getUserDao();
+
 
         User resultUser;
         try {
@@ -58,6 +63,7 @@ public class UserService {
 
     public List<User> findUserBySurname(String surname, int from, int limit) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         UserDao userDao = daoFactory.getUserDao();
 
         try {
@@ -65,12 +71,13 @@ public class UserService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during searching user by surname: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 
     public List<User> findAllUsers(int from, int limit) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         UserDao userDao = daoFactory.getUserDao();
 
         try {
@@ -78,14 +85,15 @@ public class UserService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during searching all users: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 
     public void changePassword(User user, String newPassword) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
-        UserDao userDao = daoFactory.getUserDao();
         daoFactory.beginTransaction();
+        UserDao userDao = daoFactory.getUserDao();
+
 
         Integer userId = user.getId();
         try {
@@ -101,8 +109,9 @@ public class UserService {
 
     public void editUserInfo(User user) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
-        UserDao userDao = daoFactory.getUserDao();
         daoFactory.beginTransaction();
+        UserDao userDao = daoFactory.getUserDao();
+
 
         try {
             userDao.updateUser(user);
@@ -117,8 +126,9 @@ public class UserService {
 
     public void updateLoyaltyPointsByUserId(long newLoyaltyPointsValue, int userId) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
-        UserDao userDao = daoFactory.getUserDao();
         daoFactory.beginTransaction();
+        UserDao userDao = daoFactory.getUserDao();
+
 
         try {
             userDao.updateLoyaltyPoints(newLoyaltyPointsValue, userId);
@@ -133,6 +143,7 @@ public class UserService {
 
     public int countAllUsers() throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         UserDao userDao = daoFactory.getUserDao();
 
         try {
@@ -140,12 +151,13 @@ public class UserService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during attempt to calculate all users: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 
     public int countUsersBySurname(String surname) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         UserDao userDao = daoFactory.getUserDao();
 
         try {
@@ -153,7 +165,7 @@ public class UserService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during attempt to calculate all users by surname: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 }

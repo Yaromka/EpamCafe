@@ -1,6 +1,5 @@
 package com.epam.cafe.dao;
 
-import com.epam.cafe.connection.ConnectionProxy;
 import com.epam.cafe.entity.User;
 import com.epam.cafe.exception.DAOException;
 
@@ -28,5 +27,4 @@ public interface UserDao extends Dao{
     int countByParameters() throws DAOException;
 
     int countByParameters(String surname) throws DAOException;
-
 }

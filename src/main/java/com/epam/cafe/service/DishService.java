@@ -1,7 +1,8 @@
 package com.epam.cafe.service;
 
-import com.epam.cafe.dao.DaoFactory;
 import com.epam.cafe.dao.DishDao;
+import com.epam.cafe.dao.impl.DishDaoImpl;
+import com.epam.cafe.dao.DaoFactory;
 import com.epam.cafe.entity.*;
 import com.epam.cafe.exception.DAOException;
 import com.epam.cafe.exception.ServiceException;
@@ -16,6 +17,7 @@ public class DishService {
             throws ServiceException {
 
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         DishDao dishDaoImpl = daoFactory.getDishDao();
 
         List<Dish> dishList = new ArrayList<>();
@@ -38,7 +40,7 @@ public class DishService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during searching dish by parameters: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
 
         return dishList;
@@ -46,6 +48,7 @@ public class DishService {
 
     public List<Dish> getMenu(Category category, int from, int limit) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         DishDao dishDaoImpl = daoFactory.getDishDao();
 
         List<Dish> dishList;
@@ -58,7 +61,7 @@ public class DishService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during attempt to get menu: ",e);
         } finally {
-            daoFactory.close(); //TODO: try with resource
+            daoFactory.endTransaction(); //TODO: try with resource
         }
 
         return dishList;
@@ -66,8 +69,8 @@ public class DishService {
 
     public boolean addDish(Dish dish) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
-        DishDao dishDaoImpl = daoFactory.getDishDao();
         daoFactory.beginTransaction();
+        DishDao dishDaoImpl = daoFactory.getDishDao();
 
         Dish addedDish;
         try {
@@ -79,14 +82,13 @@ public class DishService {
         } finally {
             daoFactory.endTransaction();
         }
-
         return addedDish != null;
     }
 
     public void addDishesInOrder(Order order, Map<Dish, Integer> dishes) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
-        DishDao dishDaoImpl = daoFactory.getDishDao();
         daoFactory.beginTransaction();
+        DishDao dishDaoImpl = daoFactory.getDishDao();
 
         int orderId = order.getId();
         try {
@@ -107,19 +109,23 @@ public class DishService {
 
     public Map<Dish, Integer> findDishesByOrder(Order order) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         DishDao dishDaoImpl = daoFactory.getDishDao();
 
+
         try {
-            return dishDaoImpl.getByOrder(order);
+            Map<Dish, Integer> dishes = dishDaoImpl.getByOrder(order);
+            return dishes;
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during searching all dishes by order: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 
     public void addToBasket(User user, int dishId) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         DishDao dishDaoImpl = daoFactory.getDishDao();
 
         Dish dish;
@@ -128,7 +134,7 @@ public class DishService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during addition dish to the Basket: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
 
         ShopBasket shopBasket = user.getShopBasket();
@@ -137,6 +143,7 @@ public class DishService {
 
     public void removeFromBasket(User user, String dishId) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         DishDao dishDaoImpl = daoFactory.getDishDao();
 
         Dish dish;
@@ -145,7 +152,7 @@ public class DishService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during removing dish from Basket: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
 
         ShopBasket shopBasket = user.getShopBasket();
@@ -154,8 +161,8 @@ public class DishService {
 
     public void updateEnableStatus(Boolean newEnableStatus, int dishId) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
-        DishDao dishDaoImpl = daoFactory.getDishDao();
         daoFactory.beginTransaction();
+        DishDao dishDaoImpl = daoFactory.getDishDao();
 
         try {
             dishDaoImpl.updateEnableStatusByDishId(newEnableStatus, dishId);
@@ -170,6 +177,7 @@ public class DishService {
 
     public int countDishesByParameters(Category category, Boolean enableStatus) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         DishDao dishDaoImpl = daoFactory.getDishDao();
 
         int numberOfDishes = 0;
@@ -192,7 +200,7 @@ public class DishService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during calculation dishes by parameters: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
         return numberOfDishes;
     }

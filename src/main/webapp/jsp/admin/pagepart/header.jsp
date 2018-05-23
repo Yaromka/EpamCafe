@@ -18,8 +18,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Custom styles for this template -->
-    <link href="../../../css/jsp/admin/pagepart/header.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../img/icon.ico" />
+    <link href="/css/jsp/admin/pagepart/header.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark">

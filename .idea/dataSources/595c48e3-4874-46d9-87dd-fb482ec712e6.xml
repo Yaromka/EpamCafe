@@ -930,7 +930,7 @@
       <Engine>InnoDB</Engine>
     </table>
     <table id="234" parent="2" name="orders_has_dishes">
-      <Comment>m2m . В заказе может быть много разных блюд с разным количеством порций. </Comment>
+      <Comment>m2m . В заказе может быть много разных блюд с разным количеством порций.</Comment>
       <Engine>InnoDB</Engine>
     </table>
     <table id="235" parent="2" name="roles">
@@ -974,7 +974,7 @@
     </key>
     <column id="243" parent="232" name="dish_id">
       <Position>1</Position>
-      <Comment>Synthetic primary key INT NOT NULL </Comment>
+      <Comment>Synthetic primary key INT NOT NULL</Comment>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
@@ -1144,7 +1144,7 @@ ON DELETE - SET NULL. Если пользователя удалят из БД, 
     </column>
     <column id="271" parent="234" name="orders_has_dishes_quantity">
       <Position>2</Position>
-      <Comment>количество порций. беззнаковый </Comment>
+      <Comment>количество порций. беззнаковый</Comment>
       <DataType>tinyint(3) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
@@ -1244,7 +1244,7 @@ Unique index ( одна почта- один пользователь). запр
     </column>
     <column id="287" parent="236" name="user_password">
       <Position>7</Position>
-      <Comment>user_password здесь будет храниться пороль после sha-1 хеширования </Comment>
+      <Comment>user_password здесь будет храниться пороль после sha-1 хеширования</Comment>
       <DataType>char(40)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>

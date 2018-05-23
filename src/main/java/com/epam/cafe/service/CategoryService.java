@@ -1,6 +1,7 @@
 package com.epam.cafe.service;
 
 import com.epam.cafe.dao.CategoryDao;
+import com.epam.cafe.dao.impl.CategoryDaoImpl;
 import com.epam.cafe.dao.DaoFactory;
 import com.epam.cafe.entity.Category;
 import com.epam.cafe.exception.DAOException;
@@ -12,6 +13,7 @@ public class CategoryService {
 
     public List<Category> getCategory() throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
 
         try {
@@ -19,14 +21,14 @@ public class CategoryService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during attempt to show category: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 
     public boolean addCategory(Category category) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
-        CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
         daoFactory.beginTransaction();
+        CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
 
         Category addedCategory;
         try {
@@ -44,6 +46,7 @@ public class CategoryService {
 
     public boolean isCategoryExist(String categoryName) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
 
         try {
@@ -52,12 +55,13 @@ public class CategoryService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during the audit category existence: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 
     public Category getCategoryById(int id) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
+        daoFactory.beginTransaction();
         CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
 
         try {
@@ -65,7 +69,7 @@ public class CategoryService {
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred while getting category by id: ", e);
         } finally {
-            daoFactory.close();
+            daoFactory.endTransaction();
         }
     }
 }
