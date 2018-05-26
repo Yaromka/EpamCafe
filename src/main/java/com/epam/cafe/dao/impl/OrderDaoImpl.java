@@ -1,22 +1,17 @@
 package com.epam.cafe.dao.impl;
 
+import com.epam.cafe.builder.EntityBuilder;
+import com.epam.cafe.builder.OrderBuilder;
 import com.epam.cafe.connection.ConnectionProxy;
-import com.epam.cafe.dao.AbstractDao;
 import com.epam.cafe.dao.OrderDao;
 import com.epam.cafe.entity.*;
-import com.epam.cafe.util.ResultSetConverter;
 import com.epam.cafe.exception.DAOException;
 import com.epam.cafe.util.DateTimeConverter;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.epam.cafe.constants.ParameterIndexes.*;
 
 public class OrderDaoImpl extends AbstractDao implements OrderDao{
     private static final String FIND_ALL_ORDERS = "SELECT * FROM orders limit ?,?";
@@ -50,7 +45,9 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao{
         super.setConnection(connection);
     }
 
+    @Override
     public Order create(Order order) throws DAOException {
+
         Date orderDate = order.getDate();
         String orderDateString = DateTimeConverter.convertDateTimeToString(orderDate);
 
@@ -65,13 +62,14 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao{
             sqlStatement = INSERT_NEW_PAYED_ORDER;
         }
 
-        order.setId(getInsertId(sqlStatement, orderDateString, paymentMethod, userId));
+        int orderId = createAndGetId(sqlStatement, orderDateString, paymentMethod, userId);
+        order.setId(orderId);
         return order;
     }
 
     @SuppressWarnings("unchecked")
-    public List<Order> getAll(int from, int limit) throws DAOException {
-        return executeQuery(FIND_ALL_ORDERS, from, limit);
+    public List<Order> getAll(Object... args) throws DAOException {
+        return executeQuery(FIND_ALL_ORDERS, args);
     }
 
     @SuppressWarnings("unchecked")
@@ -128,13 +126,18 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao{
     }
 
     @Override
-    protected AbstractEntity buildEntity(ResultSet resultSet) {
+    public AbstractEntity buildEntity(ResultSet resultSet) {
         Order order = null;
         try {
-            order = ResultSetConverter.createOrderEntity(resultSet);
+            order = (Order) getBuilder().createEntity(resultSet);
         } catch (DAOException e) {
             e.printStackTrace();
         }
         return order;
+    }
+
+    @Override
+    protected EntityBuilder getBuilder() {
+        return new OrderBuilder();
     }
 }

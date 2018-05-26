@@ -9,11 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface DishDao extends Dao{
+
     Dish create(Dish dish) throws DAOException;
 
     Dish getById(int id) throws DAOException;
-
-    List<Dish> getAll(int from, int limit) throws DAOException;
 
     List<Dish> getByCategory(Category category, int from, int limit) throws DAOException;
 

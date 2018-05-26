@@ -1,24 +1,22 @@
 package com.epam.cafe.dao.impl;
 
+import com.epam.cafe.builder.DishBuilder;
+import com.epam.cafe.builder.EntityBuilder;
 import com.epam.cafe.connection.ConnectionProxy;
-import com.epam.cafe.dao.AbstractDao;
 import com.epam.cafe.dao.DishDao;
-import com.epam.cafe.util.ResultSetConverter;
 import com.epam.cafe.entity.Category;
 import com.epam.cafe.entity.Dish;
 import com.epam.cafe.entity.Order;
 import com.epam.cafe.exception.DAOException;
-import com.mysql.jdbc.Statement;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.cafe.constants.ParameterIndexes.*;
+
 
 public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
     private static final String GET_ALL = "SELECT * FROM dishes limit ?,?";
@@ -44,9 +42,11 @@ public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
         super.setConnection(connection);
     }
 
-    public Dish create(Dish dish) throws DAOException{
-        dish.setId(getInsertId(INSERT_NEW_DISH, dish.getName(), dish.getDescription(), dish.getWeight(),
-                dish.getPicture(), dish.getPrice(), dish.getCategory().getId()));
+    public Dish create(Dish dish) throws DAOException {
+        int dishId = createAndGetId(INSERT_NEW_DISH, dish.getName(), dish.getDescription(), dish.getWeight(),
+                dish.getPicture(), dish.getPrice(), dish.getCategory().getId());
+
+        dish.setId(dishId);
         return dish;
     }
 
@@ -54,8 +54,8 @@ public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
         return getSingleByParameter(GET_BY_ID, id);
     }
 
-    public List<Dish> getAll(int from, int limit) throws DAOException {
-        return executeQuery(GET_ALL, from, limit);
+    public List<Dish> getAll(Object... args) throws DAOException {
+        return executeQuery(GET_ALL, args);
     }
 
     public List<Dish> getByCategoryAndEnableStatus(Category category, Boolean enableStatus, int from, int limit)
@@ -123,13 +123,18 @@ public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
     }
 
     @Override
-    protected Dish buildEntity(ResultSet resultSet) {
+    public Dish buildEntity(ResultSet resultSet) {
         Dish dish = null;
         try {
-            dish = ResultSetConverter.createDishEntity(resultSet);
+            dish = (Dish) getBuilder().createEntity(resultSet);
         } catch (DAOException e) {
             e.printStackTrace();
         }
         return dish;
+    }
+
+    @Override
+    protected EntityBuilder getBuilder() {
+        return new DishBuilder();
     }
 }

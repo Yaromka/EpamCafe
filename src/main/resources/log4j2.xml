@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration scan="true" scanPeriod="30 seconds" status="warn">
+  <Properties>
+    <Property name="logHome">logg</Property>
+  </Properties>
+
   <Appenders>
-    <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout>
+        <Pattern>%.-19date [%thread] [%level] [%logger] >>> %msg%n</Pattern>
+      </PatternLayout>
     </Console>
-    <File name="MyFile" fileName="log/logInfo.log" immediateFlush="true" append="false">
-      <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-    </File>
+
+    <RollingFile name="fileError" fileName="${logHome}/warning.log"
+                 filePattern="${logHome}/$${date:yyyy-MM}/warning-%d{yyyy-MM-dd}.log.gz">
+      <PatternLayout>
+        <Pattern>%.-19date [%thread] [%level] [%logger] >>> %msg%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="5 MB"/>
+      </Policies>
+    </RollingFile>
   </Appenders>
+
   <Loggers>
-    <Root level="debug">
-      <AppenderRef ref="Console" />
-      <AppenderRef ref="MyFile"/>
+    <Logger name="by.cafe" level="debug" additivity="false">
+      <appender-ref ref="console" level="debug" />
+      <appender-ref ref="fileError" level="warn"/>
+    </Logger>
+
+    <Root level="error">
+      <appender-ref ref="fileError" />
     </Root>
   </Loggers>
 </Configuration>

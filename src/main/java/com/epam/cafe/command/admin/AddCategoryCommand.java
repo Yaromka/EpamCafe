@@ -8,6 +8,7 @@ import com.epam.cafe.constants.SessionAttr;
 import com.epam.cafe.content.NavigationType;
 import com.epam.cafe.content.RequestContent;
 import com.epam.cafe.content.RequestResult;
+import com.epam.cafe.entity.AbstractEntity;
 import com.epam.cafe.entity.Category;
 import com.epam.cafe.exception.ServiceException;
 import com.epam.cafe.manager.ConfigurationManager;

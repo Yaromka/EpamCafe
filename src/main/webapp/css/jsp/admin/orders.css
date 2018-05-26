@@ -3,6 +3,24 @@
     align-content: center;
 }
 
+body{
+    background: url("../../../img/background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+table.table-bordered{
+    border:2px solid black;
+}
+table.table-bordered > thead > tr > th{
+    border:2px solid black;
+}
+table.table-bordered > tbody > tr > td{
+    border:2px solid black;
+}
+
 @media (max-width:360px) {
     .table-condensed{
         font-size: 10px;

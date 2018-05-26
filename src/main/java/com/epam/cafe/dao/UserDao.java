@@ -10,8 +10,6 @@ public interface UserDao extends Dao{
 
     User getById(Integer id) throws DAOException;
 
-    List<User> getAll(int from, int limit) throws DAOException;
-
     User getByEmail(String eMail) throws DAOException;
 
     User getByEmailAndPassword(String eMail, String password) throws DAOException;

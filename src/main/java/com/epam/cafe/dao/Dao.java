@@ -1,4 +1,11 @@
 package com.epam.cafe.dao;
 
-public interface Dao {
+import com.epam.cafe.entity.AbstractEntity;
+import com.epam.cafe.exception.DAOException;
+
+import java.util.List;
+
+
+public interface Dao <T extends AbstractEntity>{
+    List<T> getAll(Object... args) throws DAOException;
 }

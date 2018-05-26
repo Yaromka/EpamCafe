@@ -1,11 +1,11 @@
-package com.epam.cafe.dao;
+package com.epam.cafe.dao.impl;
 
 import com.epam.cafe.connection.ConnectionPool;
 import com.epam.cafe.connection.ConnectionProxy;
-import com.epam.cafe.dao.impl.CategoryDaoImpl;
-import com.epam.cafe.dao.impl.DishDaoImpl;
-import com.epam.cafe.dao.impl.OrderDaoImpl;
-import com.epam.cafe.dao.impl.UserDaoImpl;
+import com.epam.cafe.dao.CategoryDao;
+import com.epam.cafe.dao.DishDao;
+import com.epam.cafe.dao.OrderDao;
+import com.epam.cafe.dao.UserDao;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

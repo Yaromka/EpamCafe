@@ -15,6 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="../../css/jsp/admin/foodcort.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/icon.ico" />
 
     <title>Admin foodcort</title>
 </head>

@@ -1,5 +1,6 @@
-package com.epam.cafe.dao;
+package com.epam.cafe.dao.impl;
 
+import com.epam.cafe.builder.EntityBuilder;
 import com.epam.cafe.connection.ConnectionProxy;
 import com.epam.cafe.entity.AbstractEntity;
 import com.epam.cafe.exception.DAOException;
@@ -12,12 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractDao <T extends AbstractEntity> {
+
     protected ConnectionProxy connection;
 
     public void setConnection(ConnectionProxy connection) {
         this.connection = connection;
     }
-    protected abstract T buildEntity(ResultSet resultSet);
+
+    public abstract T buildEntity(ResultSet resultSet);
 
     protected List<T> getList(String query) throws DAOException {
         List<T> list = new ArrayList<>();
@@ -69,7 +72,7 @@ public abstract class AbstractDao <T extends AbstractEntity> {
         }
     }
 
-    protected int getInsertId(String query, Object... args) throws DAOException{
+    protected int createAndGetId(String query, Object... args) throws DAOException{
         Integer autoIncrementedId;
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -102,6 +105,8 @@ public abstract class AbstractDao <T extends AbstractEntity> {
         }
         return numberOfRows;
     }
+
+    protected abstract EntityBuilder getBuilder();
 
     private PreparedStatement setParams(PreparedStatement statement, Object... args) throws DAOException {
         try {

@@ -1,21 +1,16 @@
 package com.epam.cafe.dao.impl;
 
+import com.epam.cafe.builder.CategoryBuilder;
+import com.epam.cafe.builder.EntityBuilder;
 import com.epam.cafe.connection.ConnectionProxy;
-import com.epam.cafe.dao.AbstractDao;
 import com.epam.cafe.dao.CategoryDao;
 import com.epam.cafe.entity.AbstractEntity;
-import com.epam.cafe.util.ResultSetConverter;
 import com.epam.cafe.entity.Category;
 import com.epam.cafe.exception.DAOException;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.cafe.constants.ParameterIndexes.FIRST_INDEX;
 
 public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
     private static final String FIND_CATEGORY_BY_ID = "SELECT * FROM categories WHERE category_id=?";
@@ -27,8 +22,10 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
         super.setConnection(connection);
     }
 
+    @Override
     public Category create(Category category) throws DAOException {
-        category.setId(getInsertId(INSERT_NEW_CATEGORY, category.getName()));
+        int categoryId = createAndGetId(INSERT_NEW_CATEGORY, category.getName());
+        category.setId(categoryId);
         return category;
     }
 
@@ -37,7 +34,7 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Category> getAll() throws DAOException {
+    public List<Category> getAll(Object... args) throws DAOException {
         return getList(FIND_ALL_CATEGORY);
     }
 
@@ -46,14 +43,19 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
     }
 
     @Override
-    protected AbstractEntity buildEntity(ResultSet resultSet) {
+    public AbstractEntity buildEntity(ResultSet resultSet) {
         Category category = null;
         try {
-            category = ResultSetConverter.createCategoryEntity(resultSet);
+            category = (Category) getBuilder().createEntity(resultSet);
         } catch (DAOException e) {
             e.printStackTrace();
         }
         return category;
+    }
+
+    @Override
+    protected EntityBuilder getBuilder() {
+        return new CategoryBuilder();
     }
 }
 

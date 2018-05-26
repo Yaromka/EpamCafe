@@ -1,8 +1,7 @@
 package com.epam.cafe.service;
 
 import com.epam.cafe.dao.OrderDao;
-import com.epam.cafe.dao.impl.OrderDaoImpl;
-import com.epam.cafe.dao.DaoFactory;
+import com.epam.cafe.dao.impl.DaoFactory;
 import com.epam.cafe.entity.*;
 import com.epam.cafe.exception.DAOException;
 import com.epam.cafe.exception.ServiceException;

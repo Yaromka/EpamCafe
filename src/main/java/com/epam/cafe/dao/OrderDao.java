@@ -7,6 +7,7 @@ import com.epam.cafe.exception.DAOException;
 import java.util.List;
 
 public interface OrderDao extends Dao{
+
     Order create(Order order) throws DAOException;
 
     List<Order> getByUserId(int id, int from, int limit) throws DAOException;
@@ -14,8 +15,6 @@ public interface OrderDao extends Dao{
     List<Order> getByPayStatusAndReceiptDate(String startDate, String endDate, String payStatus, int from, int limit) throws DAOException;
 
     List<Order> getByPayStatus(String payStatus, int from, int limit) throws DAOException;
-
-    List<Order> getAll(int from, int limit) throws DAOException;
 
     List<Order> getByDatePeriod(String startDate, String endDate, int from, int limit) throws DAOException;
 

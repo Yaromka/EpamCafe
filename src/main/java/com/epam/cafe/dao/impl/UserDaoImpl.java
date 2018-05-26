@@ -1,22 +1,17 @@
 package com.epam.cafe.dao.impl;
 
+import com.epam.cafe.builder.EntityBuilder;
+import com.epam.cafe.builder.UserBuilder;
 import com.epam.cafe.connection.ConnectionProxy;
-import com.epam.cafe.dao.AbstractDao;
 import com.epam.cafe.dao.UserDao;
 import com.epam.cafe.entity.AbstractEntity;
-import com.epam.cafe.util.ResultSetConverter;
 import com.epam.cafe.entity.Role;
 import com.epam.cafe.entity.User;
 import com.epam.cafe.exception.DAOException;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.cafe.constants.ParameterIndexes.*;
 
 public class UserDaoImpl extends AbstractDao implements UserDao{
     private static final String FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE user_email=?";
@@ -38,8 +33,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
     }
 
     public User create(User user) throws DAOException {
-        user.setId(getInsertId(INSERT_USER, user.getName(), user.getSurname(), user.getPassport(),
-                user.getPhone(), user.getMail().toUpperCase(), user.getPassword(), Role.CLIENT.getDbId()));
+        int userId = createAndGetId(INSERT_USER, user.getName(), user.getSurname(), user.getPassport(),
+                user.getPhone(), user.getMail().toUpperCase(), user.getPassword(), Role.CLIENT.getDbId());
+
+        user.setId(userId);
         return user;
     }
 
@@ -48,8 +45,8 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
     }
 
     @SuppressWarnings("unchecked")
-    public List<User> getAll(int from, int limit) throws DAOException {
-        return executeQuery(FIND_ALL_USERS, from, limit);
+    public List<User> getAll(Object... args) throws DAOException {
+        return executeQuery(FIND_ALL_USERS, args);
     }
 
     public User getByEmail(String eMail) throws DAOException {
@@ -86,15 +83,19 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
         return countByParameter(COUNT_USERS_BY_SURNAME, surname);
     }
 
-
     @Override
-    protected AbstractEntity buildEntity(ResultSet resultSet) {
+    public AbstractEntity buildEntity(ResultSet resultSet) {
         User user = null;
         try {
-            user = ResultSetConverter.createUserEntity(resultSet);
+            user = (User) getBuilder().createEntity(resultSet);
         } catch (DAOException e) {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    protected EntityBuilder getBuilder() {
+        return new UserBuilder();
     }
 }

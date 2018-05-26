@@ -15,6 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="../../css/jsp/client/myaccount.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/icon.ico" />
 
     <title>Account</title>
 
