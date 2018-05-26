@@ -11,7 +11,7 @@ import java.util.List;
 
 public class OrderService {
 
-    public Order makeNewOrder(Order order) throws ServiceException {
+    public Order createOrder(Order order) throws ServiceException {
         PaymentMethod paymentMethod = order.getPaymentMethod();
         User user = order.getUser();
         if(PaymentMethod.CLIENTBILL == paymentMethod && !isEnoughMoneyToPay(user)) {
@@ -36,28 +36,24 @@ public class OrderService {
         return order;
     }
 
-    public List<Order> findAllOrderByUserId(int id, int from, int limit) throws ServiceException {
-        DaoFactory daoFactory = new DaoFactory();
-        daoFactory.beginTransaction();
-        OrderDao orderDaoImpl = daoFactory.getOrderDao();
-
-
-        try {
+    public List<Order> findOrdersByUserId(int id, int from, int limit) throws ServiceException {
+        try (DaoFactory daoFactory = new DaoFactory()){
+            OrderDao orderDaoImpl = daoFactory.getOrderDao();
             return orderDaoImpl.getByUserId(id, from, limit);
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during searching all orders by particular user: ", e);
-        } finally {
-            daoFactory.endTransaction();
         }
     }
 
-    public List<Order> findOrdersByParameters(String startDate, String endDate, String payStatus, int from, int limit) throws ServiceException {
-        DaoFactory daoFactory = new DaoFactory();
-        daoFactory.beginTransaction();
-        OrderDao orderDaoImpl = daoFactory.getOrderDao();
+    @SuppressWarnings("unchecked")
+    public List<Order> findOrdersByParameters(String startDate, String endDate, String payStatus,
+                                              int from, int limit) throws ServiceException {
 
         List<Order> orderList = new ArrayList<>();
-        try {
+
+        try (DaoFactory daoFactory = new DaoFactory()){
+            OrderDao orderDaoImpl = daoFactory.getOrderDao();
+
             if(startDate == null && payStatus == null) {
                 orderList = orderDaoImpl.getAll(from, limit);
             }
@@ -75,8 +71,6 @@ public class OrderService {
             }
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during searching all orders by parameters: ", e);
-        } finally {
-            daoFactory.endTransaction();
         }
 
         return orderList;
@@ -86,7 +80,6 @@ public class OrderService {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
         OrderDao orderDaoImpl = daoFactory.getOrderDao();
-
 
         try {
             orderDaoImpl.updateOrderPaidStatus(order, status);
@@ -105,7 +98,6 @@ public class OrderService {
         daoFactory.beginTransaction();
         OrderDao orderDaoImpl = daoFactory.getOrderDao();
 
-
         try {
             orderDaoImpl.addOrderReview(orderId, mark, comment);
             daoFactory.commit();
@@ -118,26 +110,20 @@ public class OrderService {
     }
 
     public int countAllUserOrders(int userId) throws ServiceException {
-        DaoFactory daoFactory = new DaoFactory();
-        daoFactory.beginTransaction();
-        OrderDao orderDaoImpl = daoFactory.getOrderDao();
-
-        try {
+        try (DaoFactory daoFactory = new DaoFactory()){
+            OrderDao orderDaoImpl = daoFactory.getOrderDao();
             return orderDaoImpl.countByParameters(userId);
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during calculation all orders made by user: ", e);
-        } finally {
-            daoFactory.endTransaction();
         }
     }
 
     public int countOrdersByParameters(String startDate, String endDate, String payStatus) throws ServiceException {
-        DaoFactory daoFactory = new DaoFactory();
-        daoFactory.beginTransaction();
-        OrderDao orderDaoImpl = daoFactory.getOrderDao();
-
         int numberOfOrders = 0;
-        try {
+
+        try (DaoFactory daoFactory = new DaoFactory()){
+            OrderDao orderDaoImpl = daoFactory.getOrderDao();
+
             if(startDate == null && payStatus == null) {
                 numberOfOrders = orderDaoImpl.countByParameters();
             }
@@ -155,9 +141,8 @@ public class OrderService {
             }
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during attempt to calculate all orders by parameters: ", e);
-        } finally {
-            daoFactory.endTransaction();
         }
+
         return numberOfOrders;
     }
 

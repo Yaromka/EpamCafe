@@ -69,7 +69,7 @@ public class MakeOrderCommand implements Command{
         PaymentMethod payMethod = PaymentMethod.valueOf(payMethodParameter);
         order.setPaymentMethod(payMethod);
 
-        order = orderService.makeNewOrder(order);
+        order = orderService.createOrder(order);
 
         if(order == null) {
             content.setSessionAttributes(SessionAttr.OPERATION_STATUS_NEGATIVE, Messages.DONT_ENOUGH_MONEY);

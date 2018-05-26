@@ -48,7 +48,7 @@ public class GetMyOrderCommand implements Command{
             return new RequestResult(GET_MY_ORDERS_PATH, NavigationType.FORWARD);
         }
 
-        List<Order> orderList = orderService.findAllOrderByUserId(userId, from, RECORDS_PER_PAGE);
+        List<Order> orderList = orderService.findOrdersByUserId(userId, from, RECORDS_PER_PAGE);
         int numberOfPages = (int) Math.ceil(numberOfOrders * 1.0 / RECORDS_PER_PAGE);
 
         for (Order order: orderList) {

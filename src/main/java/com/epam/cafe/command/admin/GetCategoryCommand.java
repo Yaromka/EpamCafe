@@ -25,7 +25,7 @@ public class GetCategoryCommand implements Command{
 
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
-        List<Category> categoryList = categoryService.getCategory();
+        List<Category> categoryList = categoryService.getAll();
 
         content.setSessionAttributes(SessionAttr.CATEGORY_LIST, categoryList);
         return new RequestResult(CATEGORY_CORT_PATH, NavigationType.FORWARD);

@@ -54,7 +54,7 @@ public class LogInCommand implements Command{
 
         content.setSessionAttributes(SessionAttr.USER, user);
 
-        List<Category> categoryList = categoryService.getCategory();
+        List<Category> categoryList = categoryService.getAll();
         content.setSessionAttributes(SessionAttr.CATEGORY_LIST, categoryList);
 
         if(user.getRole() == Role.CLIENT) {

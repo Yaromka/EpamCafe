@@ -48,7 +48,7 @@ public class GetOrdersByUserCommand implements Command{
             return new RequestResult(ORDERS_PATH, NavigationType.FORWARD);
         }
 
-        List<Order> orderList = orderService.findAllOrderByUserId(userId, from, RECORDS_PER_PAGE);
+        List<Order> orderList = orderService.findOrdersByUserId(userId, from, RECORDS_PER_PAGE);
 
         for (Order order: orderList) {
             order.setDishes(dishService.findDishesByOrder(order));

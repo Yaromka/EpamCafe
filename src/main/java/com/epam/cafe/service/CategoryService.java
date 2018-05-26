@@ -10,17 +10,13 @@ import java.util.List;
 
 public class CategoryService {
 
-    public List<Category> getCategory() throws ServiceException {
-        DaoFactory daoFactory = new DaoFactory();
-        daoFactory.beginTransaction();
-        CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
-
-        try {
+    @SuppressWarnings("unchecked")
+    public List<Category> getAll() throws ServiceException {
+        try (DaoFactory daoFactory = new DaoFactory()){
+            CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
             return categoryDaoImpl.getAll();
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during attempt to show category: ", e);
-        } finally {
-            daoFactory.endTransaction();
         }
     }
 
@@ -44,31 +40,23 @@ public class CategoryService {
     }
 
     public boolean isCategoryExist(String categoryName) throws ServiceException {
-        DaoFactory daoFactory = new DaoFactory();
-        daoFactory.beginTransaction();
-        CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
-
-        try {
+        try (DaoFactory daoFactory = new DaoFactory()){
+            CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
             Category category = categoryDaoImpl.getByName(categoryName.toUpperCase());
+
             return category != null;
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred during the audit category existence: ", e);
-        } finally {
-            daoFactory.endTransaction();
         }
     }
 
     public Category getCategoryById(int id) throws ServiceException {
-        DaoFactory daoFactory = new DaoFactory();
-        daoFactory.beginTransaction();
-        CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
 
-        try {
+        try (DaoFactory daoFactory = new DaoFactory()){
+            CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
             return categoryDaoImpl.getById(id);
         } catch (DAOException e) {
             throw new ServiceException("An exception occurred while getting category by id: ", e);
-        } finally {
-            daoFactory.endTransaction();
         }
     }
 }
