@@ -18,7 +18,9 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+    <link href="../css/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
     <link href="../css/jsp/registration.css" rel="stylesheet">
+    <script src="../js/bootstrap-formhelpers-phone.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="../img/icon.ico" />
 
     <title>Registration</title>
@@ -36,7 +38,7 @@
                     </c:if>
                     <br>
                     <p class="registrationMessage"><fmt:message key="label.registration.title" bundle="${rb}"/></p>
-                    <form name="registerForm" method="POST" action="/controller">
+                    <form name="registerForm" method="POST" action="${pageContext.request.contextPath}/controller">
                         <input type="hidden" name="command" value="sign_up"/>
                         <fieldset>
 
@@ -63,14 +65,15 @@
                                     <input type="text" id="surname" name="surname" required="" class="form-control" placeholder="Smith" value="${sessionScope.registrBin.surname}" pattern="^[А-ЯA-Z][a-яa-z]{2,24}"/>
                                 </div>
                             </div>
-
+                            <form>
                             <div class="control-group">
                                 <!-- Phone -->
                                 <label class="control-label" for="phone"><fmt:message key="label.registration.phone" bundle="${rb}"/><span class="required">*</span></label>
                                 <div class="controls">
-                                    <input type="text" class="form-control bfh-phone" id="phone" name="phone"  required="" value="${sessionScope.registrBin.phone}" data-format="+375 (dd) ddd-dd-dd" placeholder="+375 (29) 229-29-29" pattern="(^[+]{1}[\d]{3}[\ ][(]{1}[\d]{2}[)]{1}[\ ][\d]{3}[-]{1}[\d]{2}[-]{1}[\d]{2}$)" />
+                                    <input type="text" class="input-medium bfh-phone" id="phone" name="phone"  required="" value="${sessionScope.registrBin.phone}" data-format="+375 (dd) ddd-dd-dd" placeholder="+375 (29) 229-29-29" pattern="(^[+]{1}[\d]{3}[\ ][(]{1}[\d]{2}[)]{1}[\ ][\d]{3}[-]{1}[\d]{2}[-]{1}[\d]{2}$)" />
                                 </div>
                             </div>
+                            </form>
 
                             <div class="control-group">
                                 <!-- Passport -->

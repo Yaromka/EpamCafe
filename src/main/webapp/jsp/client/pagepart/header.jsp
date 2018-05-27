@@ -40,18 +40,18 @@
     <div class="collapse navbar-collapse" id="navbarCollapse" >
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/controller?command=get_menu&category=x&current_page=1"><fmt:message key="label.navbar.foodcort"  bundle="${rb}"/></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=get_menu&category=x&current_page=1"><fmt:message key="label.navbar.foodcort"  bundle="${rb}"/></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/controller?command=get_my_orders"><fmt:message key="label.navbar.order"  bundle="${rb}"/></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=get_my_orders"><fmt:message key="label.navbar.order"  bundle="${rb}"/></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/controller?command=get_page&jsp_page=CLIENT_ACCOUNT_JSP"><fmt:message key="label.navbar.account"  bundle="${rb}"/></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=get_page&jsp_page=CLIENT_ACCOUNT_JSP"><fmt:message key="label.navbar.account"  bundle="${rb}"/></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/controller?command=get_page&jsp_page=BASKET_JSP">
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=get_page&jsp_page=BASKET_JSP">
                     <fmt:message key="label.navbar.basket"  bundle="${rb}"/>
                     <span class="badge">${sessionScope.user.shopBasket.getBasketCapacity()}</span>
                 </a>
@@ -60,7 +60,7 @@
 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/controller?command=get_menu&category=x&current_page=1"><ctg:WelcomeTag/></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=get_menu&category=x&current_page=1"><ctg:WelcomeTag/></a>
             </li>
         </ul>
 
@@ -75,19 +75,19 @@
                 <label> ${sessionScope.user.loyaltyPoints} LP  </label>
             </li>
             <li class="nav-item">
-                <form action="/controller">
+                <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="command" value="locale">
                     <button type="submit" class="btn btn-default navbar-btn" name="locale" value="RU" ><fmt:message key="label.language.ru"  bundle="${rb}"/></button>
                 </form>
             </li>
             <li class="nav-item">
-                <form action="/controller">
+                <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="command" value="locale">
                     <button type="submit" class="btn btn-default navbar-btn" name="locale" value="EN" ><fmt:message key="label.language.en"  bundle="${rb}"/></button>
                 </form>
             </li>
             <li class="nav-item">
-                <form method="get" action="/controller">
+                <form method="get" action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="command" value="logout" />
                     <button type="submit" class="btn btn-default navbar-btn" ><fmt:message key="label.main.logout_button"  bundle="${rb}"/></button>
                 </form>

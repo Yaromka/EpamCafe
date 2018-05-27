@@ -41,7 +41,7 @@
             <br>
             <h5><fmt:message key="label.order.sort" bundle="${rb}"/></h5>
 
-            <form action="/controller">
+            <form action="${pageContext.request.contextPath}/controller">
                 <input type="hidden" name="command" value="get_orders_by_parameters"/>
                 <select class="form-control" name="pay_status" >
                     <option selected value="x"><fmt:message key="label.sort.any" bundle="${rb}"/></option>
@@ -167,41 +167,47 @@
                             </td>
 
                             <td>
-                                <c:if test="${order.orderStatus == 'CANCELED'}">
-                                    <fmt:message key="label.sort.canceled" bundle="${rb}"/>
-                                </c:if>
-                                <form class="form-inline" action="/controller">
+                                <c:if test="${order.orderStatus == 'EXPECTED'}">
+                                <form class="form-inline" action="${pageContext.request.contextPath}/controller">
                                     <input type="hidden" name="command" value="change_pay_status" />
                                     <input type="hidden" name="orderId" value=${order.id} />
                                     <input type="hidden" name="orderStatus" value="CANCELED" />
                                     <button type="submit" class="btn btn-warning" onclick="return confirm('<fmt:message key="label.message.areyousure" bundle="${rb}"/>')"><i class="fa fa-trash-o"></i><fmt:message key="label.order.refuse" bundle="${rb}"/></button>
                                 </form>
+                                </c:if>
                             </td>
                             <td>
-                                <c:if test="${order.orderStatus == 'VIOLATED'}">
-                                    <fmt:message key="label.sort.violated" bundle="${rb}"/>
-                                </c:if>
-                                <form class="form-inline" action="/controller">
+                                <c:if test="${order.orderStatus == 'EXPECTED'}">
+                                <form class="form-inline" action="${pageContext.request.contextPath}/controller">
                                     <input type="hidden" name="command" value="change_pay_status" />
                                     <input type="hidden" name="orderId" value=${order.id} />
                                     <input type="hidden" name="orderStatus" value="VIOLATED" />
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('<fmt:message key="label.message.areyousure" bundle="${rb}"/>')"><i class="fa fa-ban"></i><fmt:message key="label.order.violated" bundle="${rb}"/></button>
                                 </form>
+                                </c:if>
                             </td>
                             <td>
-                                <c:if test="${order.orderStatus == 'PAID'}">
-                                    <fmt:message key="label.sort.paid" bundle="${rb}"/>
-                                </c:if>
-                                <form class="form-inline" action="/controller">
+                                <c:if test="${order.orderStatus == 'EXPECTED'}">
+                                <form class="form-inline" action="${pageContext.request.contextPath}/controller">
                                     <input type="hidden" name="command" value="change_pay_status" />
                                     <input type="hidden" name="orderId" value=${order.id} />
                                     <input type="hidden" name="orderStatus" value="PAID" />
                                     <button type="submit" class="btn btn-success" onclick="return confirm('<fmt:message key="label.message.areyousure" bundle="${rb}"/>')"><i class="fa fa-check-circle-o"></i><fmt:message key="label.order.pay" bundle="${rb}"/></button>
                                 </form>
+                                </c:if>
                             </td>
                             <td>
                                 <c:if test="${order.orderStatus == 'EXPECTED'}">
                                     <fmt:message key="label.sort.expected" bundle="${rb}"/>
+                                </c:if>
+                                <c:if test="${order.orderStatus == 'PAID'}">
+                                    <fmt:message key="label.sort.paid" bundle="${rb}"/>
+                                </c:if>
+                                <c:if test="${order.orderStatus == 'VIOLATED'}">
+                                    <fmt:message key="label.sort.violated" bundle="${rb}"/>
+                                </c:if>
+                                <c:if test="${order.orderStatus == 'CANCELED'}">
+                                    <fmt:message key="label.sort.canceled" bundle="${rb}"/>
                                 </c:if>
                             </td>
 

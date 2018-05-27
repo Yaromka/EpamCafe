@@ -42,12 +42,12 @@
                 <c:remove var="operationStatusNegative" scope="session" />
             </c:if>
             <br>
-            <form class="form-inline" action="/controller">
+            <form class="form-inline" action="${pageContext.request.contextPath}/controller">
                 <input type="hidden" name="command" value="get_all_users" />
                 <button type="submit" class="btn btn-primary"><fmt:message key="label.admimcort.showallusers" bundle="${rb}"/></button>
             </form>
             <br/>
-            <form class="form-inline" action="/controller">
+            <form class="form-inline" action="${pageContext.request.contextPath}/controller">
                 <input type="hidden" name="command" value="get_user_by_surname" />
                 <label class="sr-only" for="inlineFormInput"><fmt:message key="label.registration.surname" bundle="${rb}"/></label>
                 <input type="text" name="surname" class="form-control" id="inlineFormInput" required placeholder="Ivanov" pattern="^[А-ЯA-Z][a-яa-z]{2,24}(-[А-ЯA-Z][a-яa-z]{2,12})?"/>
@@ -79,28 +79,24 @@
                             <td>${user.name}</td>
                             <td>${user.surname}</td>
                             <th>
-                                <div class="btn-group">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            ${user.loyaltyPoints}
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item">
-                                            <form method="get" action="/controller">
-                                                <input type="hidden" name="command" value="update_loyalty_points">
-                                                <input type="hidden" name="userId" value=${user.id} />
-                                                <input type="hidden" name="user_loyalty_points" value=${user.loyaltyPoints} />
-                                                <button type="submit" class="btn btn-success dropdown-item" name="loyalty_operation" value="+" onclick="return confirm('Are you sure?')">+</button>
-                                            </form>
-                                        </a>
-
-                                        <a class="dropdown-item">
-                                            <form method="get" action="/controller">
-                                                <input type="hidden" name="command" value="update_loyalty_points">
-                                                <input type="hidden" name="userId" value=${user.id} />
-                                                <input type="hidden" name="user_loyalty_points" value=${user.loyaltyPoints} />
-                                                <button type="submit" class="btn btn-danger dropdown-item" name="loyalty_operation" value="-" onclick="return confirm('Are you sure?')">-</button>
-                                            </form>
-                                        </a>
+                                <div class="input-group plus-minus-input">
+                                    <div class="input-group-btn">
+                                        <form class="form-inline" method="get" action="${pageContext.request.contextPath}/controller">
+                                            <input type="hidden" name="command" value="update_loyalty_points">
+                                            <input type="hidden" name="userId" value=${user.id} />
+                                            <input type="hidden" name="user_loyalty_points" value=${user.loyaltyPoints} />
+                                            <button type="submit" class="quantity-left-minus btn btn-danger btn-number" style="height:20px; margin-top: 5px; text-align: center; line-height: 1px;" value="-" name="loyalty_operation" data-type="minus" data-field="" onclick="return confirm('Are you sure?')">-</button>
+                                        </form>
+                                    </div>
+                                    <input type="text" style="height: 30px; max-width:40px; margin-left: 3px; margin-right: 3px;" size = "1" id="q-ty" name="quantity" class="form-control input-number" value=${user.loyaltyPoints}>
+                                    <div class="input-group-btn">
+                                        <form class="form-inline" method="get" action="${pageContext.request.contextPath}/controller">
+                                            <input type="hidden" name="command" value="update_loyalty_points">
+                                            <input type="hidden" name="userId" value=${user.id} />
+                                            <input type="hidden" name="user_loyalty_points" value=${user.loyaltyPoints} />
+                                            <button type="submit" class="quantity-right-plus btn btn-success btn-number" style="height:20px; margin-top: 5px; text-align: center; line-height: 1px;" value="+" name="loyalty_operation" data-type="plus" data-field="" onclick="return confirm('Are you sure?')">
+                                            +</button>
+                                        </form>
                                     </div>
                                 </div>
                             </th>
@@ -108,7 +104,7 @@
                             <td>${user.mail}</td>
                             <td>${user.phone}</td>
                             <td>
-                                <form class="form-inline" action="/controller">
+                                <form class="form-inline" action="${pageContext.request.contextPath}/controller">
                                     <input type="hidden" name="command" value="get_orders_by_user" />
                                     <input type="hidden" name="userId" value=${user.id} />
                                     <button type="submit" class="btn btn-primary"><fmt:message key="label.navbar.admin.orders" bundle="${rb}"/></button>

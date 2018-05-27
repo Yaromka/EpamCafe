@@ -43,7 +43,7 @@ public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
     }
 
     public Dish create(Dish dish) throws DAOException {
-        int dishId = createAndGetId(INSERT_NEW_DISH, dish.getName(), dish.getDescription(), dish.getWeight(),
+        int dishId = createEntityAndGetId(INSERT_NEW_DISH, dish.getName(), dish.getDescription(), dish.getWeight(),
                 dish.getPicture(), dish.getPrice(), dish.getCategory().getId());
 
         dish.setId(dishId);
@@ -51,7 +51,7 @@ public class DishDaoImpl extends AbstractDao<Dish> implements DishDao{
     }
 
     public Dish getById(int id) throws DAOException {
-        return getSingleByParameter(GET_BY_ID, id);
+        return getSingleByParameters(GET_BY_ID, id);
     }
 
     public List<Dish> getAll(Object... args) throws DAOException {

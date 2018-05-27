@@ -62,7 +62,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDao{
             sqlStatement = INSERT_NEW_PAYED_ORDER;
         }
 
-        int orderId = createAndGetId(sqlStatement, orderDateString, paymentMethod, userId);
+        int orderId = createEntityAndGetId(sqlStatement, orderDateString, paymentMethod, userId);
         order.setId(orderId);
         return order;
     }

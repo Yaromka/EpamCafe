@@ -35,7 +35,7 @@ public abstract class AbstractDao <T extends AbstractEntity> {
         return list;
     }
 
-    protected T getSingleByParameter(String query, Object... args) throws DAOException{
+    protected T getSingleByParameters(String query, Object... args) throws DAOException{
         T concreteEntity = null;
         try(PreparedStatement statement = connection.prepareStatement(query)) {
             setParams(statement, args);
@@ -72,7 +72,7 @@ public abstract class AbstractDao <T extends AbstractEntity> {
         }
     }
 
-    protected int createAndGetId(String query, Object... args) throws DAOException{
+    protected int createEntityAndGetId(String query, Object... args) throws DAOException{
         Integer autoIncrementedId;
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 

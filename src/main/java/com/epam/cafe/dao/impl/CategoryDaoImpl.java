@@ -24,13 +24,13 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
 
     @Override
     public Category create(Category category) throws DAOException {
-        int categoryId = createAndGetId(INSERT_NEW_CATEGORY, category.getName());
+        int categoryId = createEntityAndGetId(INSERT_NEW_CATEGORY, category.getName());
         category.setId(categoryId);
         return category;
     }
 
     public Category getById(int id) throws DAOException {
-        return (Category) getSingleByParameter(FIND_CATEGORY_BY_ID, id);
+        return (Category) getSingleByParameters(FIND_CATEGORY_BY_ID, id);
     }
 
     @SuppressWarnings("unchecked")
@@ -39,7 +39,7 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
     }
 
     public Category getByName(String categoryName) throws DAOException {
-        return (Category) getSingleByParameter(FIND_CATEGORY_BY_NAME, categoryName);
+        return (Category) getSingleByParameters(FIND_CATEGORY_BY_NAME, categoryName);
     }
 
     @Override

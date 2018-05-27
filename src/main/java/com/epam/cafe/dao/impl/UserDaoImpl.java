@@ -33,7 +33,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
     }
 
     public User create(User user) throws DAOException {
-        int userId = createAndGetId(INSERT_USER, user.getName(), user.getSurname(), user.getPassport(),
+        int userId = createEntityAndGetId(INSERT_USER, user.getName(), user.getSurname(), user.getPassport(),
                 user.getPhone(), user.getMail().toUpperCase(), user.getPassword(), Role.CLIENT.getDbId());
 
         user.setId(userId);
@@ -41,7 +41,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
     }
 
     public User getById(Integer id) throws DAOException {
-        return (User) getSingleByParameter(FIND_USER_BY_ID, id);
+        return (User) getSingleByParameters(FIND_USER_BY_ID, id);
     }
 
     @SuppressWarnings("unchecked")
@@ -50,11 +50,11 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
     }
 
     public User getByEmail(String eMail) throws DAOException {
-        return (User) getSingleByParameter(FIND_USER_BY_EMAIL, eMail);
+        return (User) getSingleByParameters(FIND_USER_BY_EMAIL, eMail);
     }
 
     public User getByEmailAndPassword(String eMail, String password) throws DAOException {
-        return (User) getSingleByParameter(FIND_USER_BY_EMAIL_PASSWORD, eMail, password);
+        return (User) getSingleByParameters(FIND_USER_BY_EMAIL_PASSWORD, eMail, password);
     }
 
     @SuppressWarnings("unchecked")

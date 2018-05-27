@@ -33,7 +33,7 @@
                 <c:remove var="operationStatusPositive" scope="session" />
             </c:if>
 
-            <form method="get" action="/controller">
+            <form method="get" action="${pageContext.request.contextPath}/controller">
                 <input type="hidden" name="command" value="get_menu"/>
                 <fmt:message key="label.foodcort.category" bundle="${rb}"/>
                 <br>
@@ -84,8 +84,8 @@
                                     <span>${dish.price/100}р</span>
                                 </c:if>
                             </td>
-                            <td>
-                                <form method="get" action="/controller">
+                            <td style="vertical-align:middle; text-align: center;">
+                                <form method="get" action="${pageContext.request.contextPath}/controller">
                                     <input type="hidden"  name="command" value="add_to_basket" />
                                     <input type="hidden"  name="dishId" value="${dish.id}" />
                                     <button type="submit" class="btn btn-success"><fmt:message key="label.foodcort.addtobasket" bundle="${rb}"/></button>

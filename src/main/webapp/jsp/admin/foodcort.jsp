@@ -31,7 +31,7 @@
                 <c:remove var="operationStatusPositive" scope="session" />
             </c:if>
 
-            <form method="get" action="/controller">
+            <form method="get" action="${pageContext.request.contextPath}/controller">
                 <input type="hidden" name="command" value="get_dishes"/>
                 <br>
                 <fmt:message key="label.foodcort.category" bundle="${rb}"/>
@@ -100,9 +100,9 @@
                                         <fmt:message key="label.foodcort.enable.yes" bundle="${rb}"/>
                                     </c:if>
                                 </td>
-                                <td>
+                                <td style="vertical-align:middle; text-align: center;">
                                     <c:if test="${dish.getEnable() eq false}">
-                                        <form method="get" action="/controller">
+                                        <form method="get" action="${pageContext.request.contextPath}/controller">
                                             <input type="hidden"  name="command" value="update_enable_status" />
                                             <input type="hidden"  name="new_enable_status" value="true" />
                                             <input type="hidden"  name="dishId" value="${dish.id}" />
@@ -110,7 +110,7 @@
                                         </form>
                                     </c:if>
                                     <c:if test="${dish.getEnable() eq true}">
-                                        <form method="get" action="/controller">
+                                        <form method="get" action="${pageContext.request.contextPath}/controller">
                                             <input type="hidden"  name="command" value="update_enable_status" />
                                             <input type="hidden"  name="new_enable_status" value="false" />
                                             <input type="hidden"  name="dishId" value="${dish.id}" />

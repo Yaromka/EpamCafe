@@ -33,48 +33,48 @@
     <div class="collapse navbar-collapse" id="navbarCollapse" >
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/controller?command=get_all_users&current_page=1"><fmt:message key="label.navbar.admin.main"  bundle="${rb}"/></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=get_all_users&current_page=1"><fmt:message key="label.navbar.admin.main"  bundle="${rb}"/></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/controller?command=get_orders_by_parameters&pay_status=EXPECTED&startDate=&endDate=&current_page=1"><fmt:message key="label.navbar.admin.orders"  bundle="${rb}"/></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=get_orders_by_parameters&pay_status=EXPECTED&startDate=&endDate=&current_page=1"><fmt:message key="label.navbar.admin.orders"  bundle="${rb}"/></a>
             </li>
 
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><fmt:message key="label.navbar.admin.add"  bundle="${rb}"/></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/controller?command=get_page&jsp_page=NEW_DISH_JSP"><fmt:message key="label.navbar.admin.newdish"  bundle="${rb}"/></a>
-                    <a class="dropdown-item" href="/controller?command=get_page&jsp_page=NEW_CATEGORY_JSP"><fmt:message key="label.navbar.admin.newcategory"  bundle="${rb}"/></a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/controller?command=get_page&jsp_page=NEW_DISH_JSP"><fmt:message key="label.navbar.admin.newdish"  bundle="${rb}"/></a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/controller?command=get_page&jsp_page=NEW_CATEGORY_JSP"><fmt:message key="label.navbar.admin.newcategory"  bundle="${rb}"/></a>
                 </div>
             </li>
 
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><fmt:message key="label.navbar.admin.show"  bundle="${rb}"/></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-                    <a class="dropdown-item" href="/controller?command=get_dishes&category=x&enable_status=x&current_page=1"><fmt:message key="label.navbar.admin.dishes"  bundle="${rb}"/></a>
-                    <a class="dropdown-item" href="/controller?command=get_categories"><fmt:message key="label.navbar.admin.categorys"  bundle="${rb}"/></a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/controller?command=get_dishes&category=x&enable_status=x&current_page=1"><fmt:message key="label.navbar.admin.dishes"  bundle="${rb}"/></a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/controller?command=get_categories"><fmt:message key="label.navbar.admin.categorys"  bundle="${rb}"/></a>
                 </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/controller?command=get_page&jsp_page=ADMIN_ACCOUNT_JSP"><fmt:message key="label.navbar.account"  bundle="${rb}"/></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=get_page&jsp_page=ADMIN_ACCOUNT_JSP"><fmt:message key="label.navbar.account"  bundle="${rb}"/></a>
             </li>
         </ul>
         <ul class="navbar-nav right">
             <li class="nav-item">
-                <form action="/controller">
+                <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="command" value="locale">
                     <button type="submit" class="btn btn-default navbar-btn" name="locale" value="RU" ><fmt:message key="label.language.ru"  bundle="${rb}"/></button>
                 </form>
             </li>
             <li class="nav-item">
-                <form action="/controller">
+                <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="command" value="locale">
                     <button type="submit" class="btn btn-default navbar-btn" name="locale" value="EN" ><fmt:message key="label.language.en"  bundle="${rb}"/></button>
                 </form>
             </li>
             <li class="nav-item">
-                <form method="get" action="/controller">
+                <form method="get" action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="command" value="logout" />
                     <button class="btn btn-default navbar-btn" ><fmt:message key="label.main.logout_button"  bundle="${rb}"/></button>
                 </form>
