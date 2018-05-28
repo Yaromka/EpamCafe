@@ -20,6 +20,11 @@ public class LocaleCommand implements Command{
 
     public LocaleCommand() {}
 
+    /**
+     * Returns processed result of request.
+     * It is used to change language property.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content){
         String localeParameter = content.getRequestParameterByName(SessionAttr.LOCALE);

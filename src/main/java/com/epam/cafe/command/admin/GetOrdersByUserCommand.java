@@ -29,6 +29,11 @@ public class GetOrdersByUserCommand implements Command{
         this.dishService = dishService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to show orders that have been made by particular user.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String userIdParameter = content.getRequestParameterByName(RequestParameter.USER_ID);

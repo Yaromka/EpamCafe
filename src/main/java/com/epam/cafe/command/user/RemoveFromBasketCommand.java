@@ -21,6 +21,11 @@ public class RemoveFromBasketCommand implements Command{
         this.dishService = dishService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to remove from basket added dish.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
 

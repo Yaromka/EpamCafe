@@ -11,6 +11,12 @@ import com.epam.cafe.manager.ConfigurationManager;
 
 public class GetPageCommand implements Command{
 
+    /**
+     * Returns processed result of request.
+     * It is used to response user right page.
+     * In the case when there is no such page - error page.
+     * @param requestContent give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent requestContent) throws ServiceException {
         String page = "";

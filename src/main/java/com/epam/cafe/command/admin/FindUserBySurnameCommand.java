@@ -27,6 +27,11 @@ public class FindUserBySurnameCommand implements Command{
         this.userService = userService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to find concrete user by Surname.
+     * @param content contains request parameters and set attributes for session.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String surname = content.getRequestParameterByName(RequestParameter.USER_SURNAME);

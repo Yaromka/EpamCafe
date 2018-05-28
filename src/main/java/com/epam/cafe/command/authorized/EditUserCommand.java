@@ -28,6 +28,12 @@ public class EditUserCommand implements Command{
         this.userService = userService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to edit user information(e-mail, phone etc.).
+     * The only for authorized (both users and admin).
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String email = content.getRequestParameterByName(RequestParameter.EMAIL_PARAM);

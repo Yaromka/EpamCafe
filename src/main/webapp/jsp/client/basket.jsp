@@ -73,7 +73,7 @@
                             </td>
                             <td>${dish.value}</td>
                             <td>
-                                <form method="get" action="/controller">
+                                <form method="get" action="${pageContext.request.contextPath}/controller">
                                     <input type="hidden" name="command" value="remove_from_basket"/>
                                     <input type="hidden" name="dishId" value="${dish.key.id}"/>
                                     <button type="submit" class="btn btn-danger"><fmt:message key="label.foodcort.removefrombasket" bundle="${rb}"/></button>
@@ -103,19 +103,19 @@
     <hr/>
     <div class="row">
         <div class="col-md-4">
-            <form method="get" action="/controller">
+            <form method="get" action="${pageContext.request.contextPath}/controller">
                 <label for="date" ><fmt:message key="label.basket.selectdate" bundle="${rb}"/></label>
-                <select name="pay_method" class="form-control">
+                <select style="margin-top: 10px;" id="pay-method" title="Pay method" name="pay_method" class="form-control">
                     <option selected value="CASH"><fmt:message key="label.pay.cash" bundle="${rb}"/></option>
                     <option value="CLIENTBILL"><fmt:message key="label.pay.clientbill" bundle="${rb}"/></option>
                 </select>
                 <input type="hidden" name="command" value="make_order"/>
-                <input type="date" id="date" name="oder_date" value="">
+                <input style="margin-top: 10px;" type="date" id="date" name="oder_date" value="">
                 <label for="time"><fmt:message key="label.basket.time" bundle="${rb}"/></label>
-                <input type="time" id="time" name="oder_time" value="">
+                <input style="margin-top: 10px;" type="time" id="time" name="oder_time" value="">
                 <br>
                 <div class="controls">
-                    <button type="submit"  class="btn btn-success" onclick="return confirm('<fmt:message key="label.message.areyousure" bundle="${rb}"/>')"><fmt:message key="label.basket.makeorder" bundle="${rb}"/></button>
+                    <button style="margin-top: 10px;" type="submit" id="submit" class="btn btn-success" onclick="return confirm('<fmt:message key="label.message.areyousure" bundle="${rb}"/>')"><fmt:message key="label.basket.makeorder" bundle="${rb}"/></button>
                 </div>
                 </form>
         </div>

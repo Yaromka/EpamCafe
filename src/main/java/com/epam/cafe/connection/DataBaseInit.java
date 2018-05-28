@@ -60,9 +60,5 @@ public class DataBaseInit {
     public static int getPoolSize() {
         return poolSize;
     }
-
-    public static void setPoolSize(int poolSize) {
-        DataBaseInit.poolSize = poolSize;
-    }
 }
 

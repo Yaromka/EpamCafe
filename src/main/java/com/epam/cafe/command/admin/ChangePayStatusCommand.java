@@ -25,7 +25,13 @@ public class ChangePayStatusCommand implements Command{
         this.orderService = orderService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It updates pay status after changing by administrator.
+     * @param requestContent that has all information about current order.
+     */
     @Override
+    @SuppressWarnings("unchecked")
     public RequestResult execute(RequestContent requestContent) throws ServiceException {
         String orderId = requestContent.getRequestParameterByName(RequestParameter.ORDER_ID);
         Integer currentOrderId = Integer.parseInt(orderId);
@@ -46,6 +52,6 @@ public class ChangePayStatusCommand implements Command{
         orderService.updatePaidStatus(currentUserOrder, OrderStatus.valueOf(orderStatus));
         requestContent.setSessionAttributes(SessionAttr.PAID_COMMAND_STATUS, Messages.SUCCESS);
 
-        return new RequestResult(ORDERS_PATH, NavigationType.FORWARD);
+        return new RequestResult(ORDERS_PATH, NavigationType.REDIRECT);
     }
 }

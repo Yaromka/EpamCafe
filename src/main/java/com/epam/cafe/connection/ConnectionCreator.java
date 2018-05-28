@@ -7,6 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionCreator {
+    /**
+     * Returns initialized connection.]
+     */
     public static ConnectionProxy createConnection() throws ConnectionPoolException {
         try {
             String url = DataBaseInit.getUrl();

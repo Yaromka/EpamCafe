@@ -29,6 +29,11 @@ public class ConnectionPool {
         initConnectionPool();
     }
 
+    /**
+     * Returns thread-safe connection pool singleton.
+     * If connection is not created, it would be.
+     * It is used to get connections located inside this pool.
+     */
     public static ConnectionPool getInstance() {
         if (!isInstanceExist.get()) {
             instanceLock.lock();
@@ -42,6 +47,53 @@ public class ConnectionPool {
             }
         }
         return instance;
+    }
+
+    public int getSize() {
+        return connectionQueue.size();
+    }
+
+    /**
+     * Returns connection from queue.
+     * It is used in order to get free connection.
+     */
+    public ConnectionProxy getConnection() {
+        ConnectionProxy connection = null;
+        try {
+            readWriteLock.lock();
+            semaphore.acquire();
+            connection = connectionQueue.poll();
+        } catch(InterruptedException e) {
+            LOGGER.log(Level.ERROR, "An exception occurred during getting connection", e);
+        } finally {
+            readWriteLock.unlock();
+        }
+        return connection;
+    }
+
+    /**
+     * Close all connections located in Connection pool.
+     */
+    public void terminatePool() {
+
+        for (int i = 0; i < connectionQueue.size(); i++) {
+            try {
+                connectionQueue.poll().closeConnection();
+            } catch  (SQLException e) {
+                LOGGER.log(Level.ERROR, "An exception occurred during pool termination", e);
+            }
+        }
+        deregisterAllDrivers();
+    }
+
+    /**
+     * Package private.
+     */
+    void releaseConnection(ConnectionProxy connection) {
+        readWriteLock.lock();
+        connectionQueue.offer(connection);
+        semaphore.release();
+        readWriteLock.unlock();
     }
 
     private void initConnectionPool() {
@@ -66,36 +118,6 @@ public class ConnectionPool {
         }
     }
 
-    public int getSize() {
-        return connectionQueue.size();
-    }
-
-    public ConnectionProxy getConnection() {
-        ConnectionProxy connection = null;
-        try {
-            readWriteLock.lock();
-            semaphore.acquire();
-            connection = connectionQueue.poll();
-        } catch(InterruptedException e) {
-            LOGGER.log(Level.ERROR, "An exception occurred during getting connection", e);
-        } finally {
-            readWriteLock.unlock();
-        }
-        return connection;
-    }
-
-    public void terminatePool() {
-
-        for (int i = 0; i < connectionQueue.size(); i++) {
-            try {
-                connectionQueue.poll().closeConnection();
-            } catch  (SQLException e) {
-                LOGGER.log(Level.ERROR, "An exception occurred during pool termination", e);
-            }
-        }
-        deregisterAllDrivers();
-    }
-
     private void deregisterAllDrivers() {
         try {
             Enumeration<Driver> drivers = DriverManager.getDrivers();
@@ -106,12 +128,5 @@ public class ConnectionPool {
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR,"Deregister driver error");
         }
-    }
-
-    void releaseConnection(ConnectionProxy connection) {
-        readWriteLock.lock();
-        connectionQueue.offer(connection);
-        semaphore.release();
-        readWriteLock.unlock();
     }
 }

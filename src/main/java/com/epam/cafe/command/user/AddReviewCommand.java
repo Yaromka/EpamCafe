@@ -22,6 +22,11 @@ public class AddReviewCommand implements Command{
         this.orderService = orderService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to add a review for an order and validate the mark.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String orderIdParam = content.getRequestParameterByName(RequestParameter.ORDER_ID);

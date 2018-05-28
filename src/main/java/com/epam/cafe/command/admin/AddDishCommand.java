@@ -27,6 +27,12 @@ public class AddDishCommand implements Command{
         this.categoryService = categoryService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It checks does parameters valid or not.
+     * If dish has been added - redirect, also - forward.
+     * @param content that has all information about new dish.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String price = content.getRequestParameterByName(RequestParameter.DISH_PRICE_PARAM);

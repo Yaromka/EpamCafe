@@ -29,11 +29,18 @@ public class LogInCommand implements Command{
     private UserService userService;
     private CategoryService categoryService;
 
+
     public LogInCommand(UserService userService, CategoryService categoryService) {
         this.userService = userService;
         this.categoryService = categoryService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to get in an account.
+     * The only for guests.
+     * @param content sets attributes for session and give parameters from request.
+     */
     public RequestResult execute(RequestContent content) throws ServiceException {
 
         String enterEmail = content.getRequestParameterByName(RequestParameter.EMAIL);

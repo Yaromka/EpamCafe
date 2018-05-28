@@ -8,7 +8,6 @@ import com.epam.cafe.constants.SessionAttr;
 import com.epam.cafe.content.NavigationType;
 import com.epam.cafe.content.RequestContent;
 import com.epam.cafe.content.RequestResult;
-import com.epam.cafe.entity.AbstractEntity;
 import com.epam.cafe.entity.Category;
 import com.epam.cafe.exception.ServiceException;
 import com.epam.cafe.manager.ConfigurationManager;
@@ -23,6 +22,13 @@ public class AddCategoryCommand implements Command{
         this.categoryService = categoryService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It checks does category exist or not.
+     * If category has been added previously - forward.
+     * If operation has been completed correctly - redirect.
+     * @param requestContent that has all information about new category.
+     */
     @Override
     public RequestResult execute(RequestContent requestContent) throws ServiceException {
         String categoryName = requestContent.getRequestParameterByName(RequestParameter.CATEGORY_NAME);

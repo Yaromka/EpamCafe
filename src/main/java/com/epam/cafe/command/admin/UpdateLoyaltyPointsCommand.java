@@ -24,6 +24,11 @@ public class UpdateLoyaltyPointsCommand implements Command{
         this.userService = userService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to update loyalty points quantity of the particular user.
+     * @param requestContent sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent requestContent) throws ServiceException {
         String loyaltyPointsParameter = requestContent.getRequestParameterByName(RequestParameter.USER_LOYALTY_POINTS);

@@ -27,6 +27,11 @@ public class GetDishCommand implements Command{
         this.dishService = dishService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to show dishes that fall under some category or/and has concrete enable status.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String categoryParam = content.getRequestParameterByName(RequestParameter.CATEGORY);

@@ -52,7 +52,7 @@
                         <th><fmt:message key="label.order.paystatus" bundle="${rb}"/></th>
                         <th><fmt:message key="label.order.orderdate" bundle="${rb}"/></th>
                         <th><fmt:message key="label.order.price" bundle="${rb}"/></th>
-                        <th><fmt:message key="label.order.add.review" bundle="${rb}"/></th></th>
+                        <th><fmt:message key="label.order.add.review" bundle="${rb}"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -123,7 +123,7 @@
                             </td>
                             <td>
                                 <c:if test="${order.orderStatus == 'PAID'}">
-                                    <form class="form-inline" action="/controller">
+                                    <form class="form-inline" action="${pageContext.request.contextPath}/controller">
                                         <input type="hidden" name="command" value="add_review" />
                                         <input type="hidden" name="orderId" value=${order.id} />
                                         <button type="submit" class="btn btn-primary"><fmt:message key="label.order.add.review" bundle="${rb}"/></button>

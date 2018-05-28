@@ -40,10 +40,6 @@ public class DateTimeConverter {
         return orderDate;
     }
 
-    public static String convertDateToString(Date date) {
-        return SDF_DATE.format(date);
-    }
-
     public static String convertDateTimeToString(Date date) {
         return SDF_DATETIME.format(date);
     }

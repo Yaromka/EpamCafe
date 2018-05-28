@@ -21,6 +21,11 @@ public class OrderBuilder implements EntityBuilder {
     private static final String ORDER_RATING_PARAM = "order_rating";
     private static final String ORDER_STATUS_PARAM = "order_status";
 
+    /**
+     * Returns order with all fields filled.
+     * It is used in DAO in order to create entities outside.
+     * @param resultSet that has all information about category.
+     */
     @Override
     public Order createEntity(ResultSet resultSet) throws DAOException{
         Order order = new Order();

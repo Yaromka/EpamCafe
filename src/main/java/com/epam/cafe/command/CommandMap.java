@@ -25,6 +25,29 @@ public class CommandMap {
     private EnumMap<CommandType, Command> map = new EnumMap<>(CommandType.class);
     private static CommandMap instance = new CommandMap();
 
+    /**
+     * Returns suitable command.
+     * It is used to define the type of concrete command by string value.
+     * There are different access levels for different commands.
+     * @param commandParameter holds the value of command.
+     */
+    public static Command defineCommandType(String commandParameter) {
+        List<Command> list = new ArrayList<>();
+        EnumMap<CommandType, Command> commandMap = getInstance().map;
+
+        CommandType commandType = CommandType.valueOf(commandParameter);
+        for (Map.Entry<CommandType,Command> currentCommand : commandMap.entrySet()) {
+            CommandType currentCommandType = currentCommand.getKey();
+            if(currentCommandType.equals(commandType))
+            {
+                Command command = currentCommand.getValue();
+                list.add(command);
+                break;
+            }
+        }
+        return list.get(0);
+    }
+
     private CommandMap() {
         map.put(LOGIN, new LogInCommand(new UserService(), new CategoryService()));
         map.put(LOGOUT, new LogOutCommand());
@@ -54,22 +77,5 @@ public class CommandMap {
 
     private static CommandMap getInstance() {
         return instance;
-    }
-
-    public static Command defineCommandType(String commandParameter) {
-        List<Command> list = new ArrayList<>();
-        EnumMap<CommandType, Command> commandMap = getInstance().map;
-
-        CommandType commandType = CommandType.valueOf(commandParameter);
-        for (Map.Entry<CommandType,Command> currentCommand : commandMap.entrySet()) {
-            CommandType currentCommandType = currentCommand.getKey();
-            if(currentCommandType.equals(commandType))
-            {
-                Command command = currentCommand.getValue();
-                list.add(command);
-                break;
-            }
-        }
-        return list.get(0);
     }
 }

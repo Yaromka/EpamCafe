@@ -28,6 +28,11 @@ public class GetMenuCommand implements Command{
         this.dishService = dishService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to show all dishes that are in stock.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String categoryParam = content.getRequestParameterByName(RequestParameter.CATEGORY);

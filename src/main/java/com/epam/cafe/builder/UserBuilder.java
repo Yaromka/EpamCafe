@@ -20,6 +20,11 @@ public class UserBuilder implements EntityBuilder {
     private static final String PASSWORD_PARAM = "user_password";
     private static final String MONEY_PARAM = "user_money";
 
+    /**
+     * Returns user with all fields filled.
+     * It is used in DAO in order to create entities outside.
+     * @param resultSet that has all information about category.
+     */
     @Override
     public User createEntity(ResultSet resultSet) throws DAOException{
         User user;

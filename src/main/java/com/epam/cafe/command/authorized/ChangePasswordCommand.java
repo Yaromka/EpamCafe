@@ -27,6 +27,12 @@ public class ChangePasswordCommand implements Command{
         this.userService = userService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to change password.
+     * The only for authorized (both users and admin).
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String newPassword = content.getRequestParameterByName(RequestParameter.NEW_PASSWORD_PARAM);
@@ -59,6 +65,6 @@ public class ChangePasswordCommand implements Command{
         content.sessionInvalidate();
         content.setSessionAttributes(SessionAttr.USER, null);
         content.setSessionAttributes(SessionAttr.USER_TYPE, null);
-        return new RequestResult(LOGIN_PATH, NavigationType.FORWARD);
+        return new RequestResult(LOGIN_PATH, NavigationType.REDIRECT);
     }
 }

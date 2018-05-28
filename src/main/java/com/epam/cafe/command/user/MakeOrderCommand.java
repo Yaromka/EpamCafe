@@ -31,6 +31,11 @@ public class MakeOrderCommand implements Command{
         this.dishService = dishService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to create a new order and validate receipt date.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         User user = (User)content.getSessionAttributeByName(SessionAttr.USER);
@@ -79,6 +84,6 @@ public class MakeOrderCommand implements Command{
         dishService.addDishesInOrder(order, dishesFromBasket);
         shopBasket.clean();
 
-        return new RequestResult(USER_ORDERS_PATH, NavigationType.FORWARD);
+        return new RequestResult(USER_ORDERS_PATH, NavigationType.REDIRECT);
     }
 }

@@ -21,6 +21,11 @@ public class UpdateDishStockStatus implements Command{
         this.dishService = dishService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to update information on the availability of concrete dish.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String newEnableStatusParameter = content.getRequestParameterByName(RequestParameter.NEW_ENABLE_STATUS);

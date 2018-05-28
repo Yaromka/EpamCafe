@@ -20,7 +20,6 @@
     <meta name="author" content="">
     <link href="../css/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
     <link href="../css/jsp/registration.css" rel="stylesheet">
-    <script src="../js/bootstrap-formhelpers-phone.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="../img/icon.ico" />
 
     <title>Registration</title>

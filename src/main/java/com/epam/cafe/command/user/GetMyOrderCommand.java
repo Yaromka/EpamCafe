@@ -29,6 +29,11 @@ public class GetMyOrderCommand implements Command{
         this.dishService = dishService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to show all orders made by concrete user.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         int pageNumber = DEFAULT_PAGE_NUMBER;

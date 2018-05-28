@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration scan="true" scanPeriod="30 seconds" status="warn">
-  <Properties>
-    <Property name="logHome">logg</Property>
-  </Properties>
+    <Properties>
+        <Property name="logHome">log</Property>
+    </Properties>
 
-  <Appenders>
-    <Console name="console" target="SYSTEM_OUT">
-      <PatternLayout>
-        <Pattern>%.-19date [%thread] [%level] [%logger] >>> %msg%n</Pattern>
-      </PatternLayout>
-    </Console>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>%.-19date [%thread] [%level] [%logger] >>> %msg%n</Pattern>
+            </PatternLayout>
+        </Console>
 
-    <RollingFile name="fileError" fileName="${logHome}/warning.log"
-                 filePattern="${logHome}/$${date:yyyy-MM}/warning-%d{yyyy-MM-dd}.log.gz">
-      <PatternLayout>
-        <Pattern>%.-19date [%thread] [%level] [%logger] >>> %msg%n</Pattern>
-      </PatternLayout>
-      <Policies>
-        <TimeBasedTriggeringPolicy />
-        <SizeBasedTriggeringPolicy size="5 MB"/>
-      </Policies>
-    </RollingFile>
-  </Appenders>
+        <RollingFile name="fileError" fileName="C:\Users\User\Desktop\experement\EpamCafe\log\logInfo.log"
+                     filePattern="${logHome}/$${date:yyyy-MM}/warning-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <Pattern>%.-19date [%thread] [%level] [%logger] >>> %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
 
-  <Loggers>
-    <Logger name="by.cafe" level="debug" additivity="false">
-      <appender-ref ref="console" level="debug" />
-      <appender-ref ref="fileError" level="warn"/>
-    </Logger>
+    <Loggers>
+        <Logger name="com.cafe" level="debug" additivity="false">
+            <appender-ref ref="console" level="debug" />
+            <appender-ref ref="fileError" level="warn"/>
+        </Logger>
 
-    <Root level="error">
-      <appender-ref ref="fileError" />
-    </Root>
-  </Loggers>
+        <Root level="error">
+            <appender-ref ref="fileError" />
+        </Root>
+    </Loggers>
 </Configuration>

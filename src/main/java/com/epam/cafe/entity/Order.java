@@ -34,10 +34,6 @@ public class Order extends AbstractEntity{
         this.id = id;
     }
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
@@ -50,16 +46,6 @@ public class Order extends AbstractEntity{
         this.date = data;
     }
 
-    public long getTotalPrice() {
-        long total = 0;
-        for (Map.Entry<Dish, Integer> pair: dishes.entrySet()) {
-            Dish dish = pair.getKey();
-            int amount = pair.getValue();
-            total += dish.getPrice() * amount;
-        }
-        return total;
-    }
-
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
@@ -68,16 +54,8 @@ public class Order extends AbstractEntity{
         this.paymentMethod = paymentMethod;
     }
 
-    public OrderRating getRating() {
-        return rating;
-    }
-
     public void setRating(OrderRating rating) {
         this.rating = rating;
-    }
-
-    public String getReview() {
-        return review;
     }
 
     public void setReview(String review) {

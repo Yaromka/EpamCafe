@@ -21,6 +21,11 @@ public class AddToBasketCommand implements Command{
         this.dishService = dishService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used in order to add dishes to basket.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String dishIdParameter = content.getRequestParameterByName(RequestParameter.DISH_ID);

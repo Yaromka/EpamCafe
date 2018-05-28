@@ -35,6 +35,11 @@ public class GetOrdersByParametersCommand implements Command{
         this.dishService = dishService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to show orders that are in concrete time-bound.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String payStatusParam = content.getRequestParameterByName(RequestParameter.PAY_STATUS);

@@ -25,6 +25,11 @@ public class FindAllUsersCommand implements Command{
         this.userService = userService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It shows all users and information about them.
+     * @param content contains request parameters.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         int pageNumber = DEFAULT_PAGE_NUMBER;

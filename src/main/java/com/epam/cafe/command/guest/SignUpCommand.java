@@ -26,6 +26,12 @@ public class SignUpCommand implements Command{
         this.userService = userService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to create an account and validate inputted information.
+     * The only for guests.
+     * @param content sets attributes for session and give parameters from request.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         String email = content.getRequestParameterByName(RequestParameter.EMAIL_PARAM);

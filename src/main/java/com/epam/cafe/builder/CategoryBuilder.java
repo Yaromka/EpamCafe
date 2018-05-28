@@ -1,6 +1,5 @@
 package com.epam.cafe.builder;
 
-import com.epam.cafe.entity.AbstractEntity;
 import com.epam.cafe.entity.Category;
 import com.epam.cafe.exception.DAOException;
 
@@ -11,6 +10,11 @@ public class CategoryBuilder implements EntityBuilder {
     private static final String CATEGORY_NAME_PARAM = "category_name";
     private static final String CATEGORY_ID_PARAM = "category_id";
 
+    /**
+     * Returns category with all fields filled.
+     * It is used in DAO in order to create entities outside.
+     * @param resultSet that has all information about category.
+     */
     @Override
     public Category createEntity(ResultSet resultSet) throws DAOException {
         Category category;

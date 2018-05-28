@@ -13,6 +13,12 @@ public class LogOutCommand implements Command{
 
     public LogOutCommand() {}
 
+    /**
+     * Returns processed result of request.
+     * It is used to log out from account.
+     * The only for authorized (both users and admin).
+     * @param content sets attributes for session and give parameters from request.
+     */
     public RequestResult execute(RequestContent content) {
         content.sessionInvalidate();
         content.setSessionAttributes(SessionAttr.USER, null);

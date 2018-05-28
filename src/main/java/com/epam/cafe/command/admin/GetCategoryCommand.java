@@ -23,6 +23,11 @@ public class GetCategoryCommand implements Command{
         this.categoryService = categoryService;
     }
 
+    /**
+     * Returns processed result of request.
+     * It is used to show all categories.
+     * @param content sets attributes for session.
+     */
     @Override
     public RequestResult execute(RequestContent content) throws ServiceException {
         List<Category> categoryList = categoryService.getAll();

@@ -20,6 +20,11 @@ public class DishBuilder implements EntityBuilder {
     private static final String DISH_PICTURE_PARAM = "dish_picture";
     private static final String DISH_IS_ENABLE_PARAM = "dish_isEnable";
 
+    /**
+     * Returns dish with all fields filled.
+     * It is used in DAO in order to create entities outside.
+     * @param resultSet that has all information about category.
+     */
     @Override
     public Dish createEntity(ResultSet resultSet) throws DAOException{
         Dish dish;
