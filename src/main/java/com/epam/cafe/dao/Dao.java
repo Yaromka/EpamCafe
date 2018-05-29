@@ -7,5 +7,10 @@ import java.util.List;
 
 
 public interface Dao <T extends AbstractEntity>{
+
+    /**
+     * Returns all entities from table.
+     * @param args query and some parameters.
+     */
     List<T> getAll(Object... args) throws DAOException;
 }

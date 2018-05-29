@@ -11,6 +11,10 @@ import java.util.List;
 
 public class OrderService {
 
+    /**
+     * Add in DAO new order.
+     * @param order object that should be inserted.
+     */
     public Order createOrder(Order order) throws ServiceException {
         PaymentMethod paymentMethod = order.getPaymentMethod();
         User user = order.getUser();
@@ -21,7 +25,6 @@ public class OrderService {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
         OrderDao orderDaoImpl = daoFactory.getOrderDao();
-
 
         try {
             order = orderDaoImpl.create(order);
@@ -36,6 +39,12 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * Returns all orders made by concrete user.
+     * @param id primary key from users table.
+     * @param from start pagination position.
+     * @param limit positions per page.
+     */
     public List<Order> findOrdersByUserId(int id, int from, int limit) throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
             OrderDao orderDaoImpl = daoFactory.getOrderDao();
@@ -45,6 +54,14 @@ public class OrderService {
         }
     }
 
+    /**
+     * Returns all orders those receipt date is in concrete time frame.
+     * @param startDate first receipt date border.
+     * @param endDate second receipt date border.
+     * @param payStatus could be payed, cancelled, violated or expected.
+     * @param from which element should be first on the page.
+     * @param limit how much elements should be on the page.
+     */
     @SuppressWarnings("unchecked")
     public List<Order> findOrdersByParameters(String startDate, String endDate, String payStatus,
                                               int from, int limit) throws ServiceException {
@@ -76,6 +93,11 @@ public class OrderService {
         return orderList;
     }
 
+    /**
+     * Updates paid status of concrete order in the table.
+     * @param order concrete order.
+     * @param status does order paid, canceled or violated
+     */
     public void updatePaidStatus(Order order, OrderStatus status) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -93,6 +115,12 @@ public class OrderService {
         }
     }
 
+    /**
+     * Add review about concrete order.
+     * @param orderId primary order's key from the table.
+     * @param mark mark that user leaves for order.
+     * @param comment massage that explains mark.
+     */
     public void addReview(int orderId, int mark, String comment) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -109,6 +137,10 @@ public class OrderService {
         }
     }
 
+    /**
+     * Count orders made by concrete user.
+     * @param userId primary user's key from table.
+     */
     public int countAllUserOrders(int userId) throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
             OrderDao orderDaoImpl = daoFactory.getOrderDao();
@@ -118,6 +150,12 @@ public class OrderService {
         }
     }
 
+    /**
+     * Count orders by receipt date period and pay status.
+     * @param startDate first receipt date border.
+     * @param endDate second receipt date border.
+     * @param payStatus could be payed, cancelled, violated or expected.
+     */
     public int countOrdersByParameters(String startDate, String endDate, String payStatus) throws ServiceException {
         int numberOfOrders = 0;
 

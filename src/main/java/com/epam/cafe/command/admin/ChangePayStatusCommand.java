@@ -52,6 +52,6 @@ public class ChangePayStatusCommand implements Command{
         orderService.updatePaidStatus(currentUserOrder, OrderStatus.valueOf(orderStatus));
         requestContent.setSessionAttributes(SessionAttr.PAID_COMMAND_STATUS, Messages.SUCCESS);
 
-        return new RequestResult(ORDERS_PATH, NavigationType.REDIRECT);
+        return new RequestResult(ORDERS_PATH, NavigationType.FORWARD);
     }
 }

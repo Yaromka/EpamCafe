@@ -9,6 +9,11 @@ import java.util.Calendar;
 
 public class WelcomeTag extends TagSupport {
     private static final Logger LOGGER = LogManager.getLogger(WelcomeTag.class);
+
+    /**
+     * Creates a tag on the header of page.
+     * Which checks the day of the week and write some sentence.
+     */
     @Override
     public int doStartTag() {
         Calendar calendar = Calendar.getInstance();
@@ -38,7 +43,6 @@ public class WelcomeTag extends TagSupport {
                 currentDay = "Saturday";
                 break;
         }
-
 
         String endOfPhrase = " = Programmer - an organism that turns food into software.";
         JspWriter out = pageContext.getOut();

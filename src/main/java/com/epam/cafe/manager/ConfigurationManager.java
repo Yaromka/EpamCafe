@@ -11,7 +11,10 @@ public class ConfigurationManager {
     private static final Logger LOGGER = LogManager.getLogger(ConfigurationManager.class);
 
     private ConfigurationManager() { }
-
+    /**
+     * Returns all page paths by key.
+     * @param key value from .property file.
+     */
     public static String getProperty(String key) {
         String res;
         ResourceBundle resourceBundle;

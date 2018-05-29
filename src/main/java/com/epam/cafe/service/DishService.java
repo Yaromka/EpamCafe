@@ -12,6 +12,13 @@ import java.util.Map;
 
 public class DishService {
 
+    /**
+     * Returns all dishes from table by parameters.
+     * @param category contains particular dishes.
+     * @param enableStatus does dish added in stock or not.
+     * @param from which element should be first on the page.
+     * @param limit how much elements should be on the page.
+     */
     @SuppressWarnings("unchecked")
     public List<Dish> findDishesByParameters(Category category, Boolean enableStatus, int from, int limit)
             throws ServiceException {
@@ -42,6 +49,12 @@ public class DishService {
         return dishList;
     }
 
+    /**
+     * Returns dishes from table.
+     * @param category contains particular dishes.
+     * @param from which element should be first on the page.
+     * @param limit how much elements should be on the page.
+     */
     public List<Dish> getMenu(Category category, int from, int limit) throws ServiceException {
         List<Dish> dishList;
 
@@ -60,6 +73,10 @@ public class DishService {
         return dishList;
     }
 
+    /**
+     * Add in DAO new dish.
+     * @param dish object that should be inserted.
+     */
     public boolean addDish(Dish dish) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -78,6 +95,11 @@ public class DishService {
         return addedDish != null;
     }
 
+    /**
+     * Add dishes in concrete order.
+     * @param order dishes should be added there.
+     * @param dishes map with dishes and their quantity.
+     */
     public void addDishesInOrder(Order order, Map<Dish, Integer> dishes) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -100,6 +122,11 @@ public class DishService {
         }
     }
 
+    /**
+     * Returns all dishes those contains concrete order.
+     * Structured in map due to show quantity of dishes.
+     * @param order concrete order with dishes.
+     */
     public Map<Dish, Integer> findDishesByOrder(Order order) throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
             DishDao dishDaoImpl = daoFactory.getDishDao();
@@ -109,6 +136,11 @@ public class DishService {
         }
     }
 
+    /**
+     * Add dish in basket by it's id.
+     * @param user shop basket that holds current user;
+     * @param dishId primary dish's key from table;
+     */
     public void addToBasket(User user, int dishId) throws ServiceException {
         Dish dish;
 
@@ -123,6 +155,11 @@ public class DishService {
         shopBasket.addDish(dish);
     }
 
+    /**
+     * Remove dish from basket by it's id.
+     * @param user shop basket that holds current user;
+     * @param dishId primary dish's key from table;
+     */
     public void removeFromBasket(User user, String dishId) throws ServiceException {
         Dish dish;
         try (DaoFactory daoFactory = new DaoFactory()){
@@ -136,6 +173,11 @@ public class DishService {
         shopBasket.removeDish(dish);
     }
 
+    /**
+     * Updates enable status of concrete dish in the table.
+     * @param dishId primary dish's key from table.
+     * @param newEnableStatus does dish added in stock or not.
+     */
     public void updateEnableStatus(Boolean newEnableStatus, int dishId) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -152,6 +194,11 @@ public class DishService {
         }
     }
 
+    /**
+     * Returns quantity of dishes in particular category by enable status.
+     * @param category concrete category that contains dishes.
+     * @param enableStatus does dish added in stock or not.
+     */
     public int countDishesByParameters(Category category, Boolean enableStatus) throws ServiceException {
         int numberOfDishes = 0;
 

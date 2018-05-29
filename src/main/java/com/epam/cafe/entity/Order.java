@@ -58,6 +58,28 @@ public class Order extends AbstractEntity{
         this.rating = rating;
     }
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public long getTotalPrice() {
+        long total = 0;
+        for (Map.Entry<Dish, Integer> pair: dishes.entrySet()) {
+            Dish dish = pair.getKey();
+            int amount = pair.getValue();
+            total += dish.getPrice() * amount;
+        }
+        return total;
+    }
+
+    public OrderRating getRating() {
+        return rating;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
     public void setReview(String review) {
         this.review = review;
     }

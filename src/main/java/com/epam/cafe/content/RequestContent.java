@@ -37,22 +37,7 @@ public class RequestContent {
         requestAttributes.put(name, attribute);
     }
 
-    public String getRequestParameterByName(String parameterName) {
-        String[] parameters = requestParameters.get(parameterName);
-        if(parameters != null) {
-            return parameters[0];
-        }
-        return null;
-    }
-
-    public void setSessionAttributesForPagination(int numberOfPages, int pageNumber, String parameters) {
-        this.setSessionAttributes(SessionAttr.NUMBER_OF_PAGES, numberOfPages);
-        this.setSessionAttributes(SessionAttr.CURRENT_PAGE, pageNumber);
-        this.setSessionAttributes(SessionAttr.PAGINATION_URL, buildUrlForPagination(parameters));
-    }
-
-    public void setRequestParameters(Map<String, String[]> parameters)
-    {
+    public void setRequestParameters(Map<String, String[]> parameters) {
         requestParameters = parameters;
     }
 
@@ -68,23 +53,46 @@ public class RequestContent {
         sessionAttributes.put(name, attribute);
     }
 
-    public void sessionInvalidate() {
-        requestAttributes = new HashMap<>();
-        sessionAttributes = new HashMap<>();
-        requestParameters = new HashMap<>();
+    /**
+     * Returns concrete request parameter by name.
+     * @param parameterName - name of parameter.
+     */
+    public String getRequestParameterByName(String parameterName) {
+        String[] parameters = requestParameters.get(parameterName);
+        if(parameters != null) {
+            return parameters[0];
+        }
+        return null;
     }
 
     public String getCommandName() {
         return requestParameters.get(PARAM_COMMAND)[0].toUpperCase();
     }
 
+    /**
+     * Set session attributes for pagination.
+     * @param numberOfPages whole number of pages in concrete command (for example all dishes or users 5 per page).
+     * @param pageNumber current page number.
+     * @param parameters contains special command parameters (for example dishes with concrete enable status).
+     */
+    public void setSessionAttributesForPagination(int numberOfPages, int pageNumber, String parameters) {
+        this.setSessionAttributes(SessionAttr.NUMBER_OF_PAGES, numberOfPages);
+        this.setSessionAttributes(SessionAttr.CURRENT_PAGE, pageNumber);
+        this.setSessionAttributes(SessionAttr.PAGINATION_URL, buildUrlForPagination(parameters));
+    }
+
+    /**
+     * Cleans session.
+     */
+    public void sessionInvalidate() {
+        requestAttributes = new HashMap<>();
+        sessionAttributes = new HashMap<>();
+        requestParameters = new HashMap<>();
+    }
+
     private String buildUrlForPagination(String commandParameters) {
         String commandName = getCommandName();
         return "/controller?command="+commandName+commandParameters;
-    }
-
-    public Map<String, String[]> getRequestParameters() {
-        return requestParameters;
     }
 }
 

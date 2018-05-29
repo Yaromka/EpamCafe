@@ -10,6 +10,11 @@ import java.util.List;
 
 public class UserService {
 
+    /**
+     * Returns concrete user from DAO by e-mail and password.
+     * @param enterEmail of concrete user to be returned.
+     * @param enterPass user's password.
+     */
     public User logIn(String enterEmail, String enterPass) throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
             UserDao userDao = daoFactory.getUserDao();
@@ -20,6 +25,10 @@ public class UserService {
         }
     }
 
+    /**
+     * Checks if user with such eMail exists.
+     * @param enterEmail eMail to be checked.
+     */
     public boolean isEmailExist(String enterEmail) throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
             UserDao userDao = daoFactory.getUserDao();
@@ -30,6 +39,10 @@ public class UserService {
         }
     }
 
+    /**
+     * Add in DAO new user.
+     * @param user object that should be inserted.
+     */
     public boolean signUp(User user) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -49,6 +62,12 @@ public class UserService {
         return resultUser != null;
     }
 
+    /**
+     * Returns concrete user from DAO by surname.
+     * @param surname of concrete user to be returned.
+     * @param from which element should be first on the page.
+     * @param limit how much elements should be on the page.
+     */
     public List<User> findUserBySurname(String surname, int from, int limit) throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
             UserDao userDao = daoFactory.getUserDao();
@@ -58,6 +77,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Returns all users from table.
+     * @param from which element should be first on the page.
+     * @param limit how much elements should be on the page.
+     */
     @SuppressWarnings("unchecked")
     public List<User> findAllUsers(int from, int limit) throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
@@ -68,6 +92,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Updates user's password by id.
+     * @param user which password should be changed.
+     * @param newPassword user's new password.
+     */
     public void changePassword(User user, String newPassword) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -85,6 +114,10 @@ public class UserService {
         }
     }
 
+    /**
+     * Updates user's information.
+     * @param user of concrete user to be updated.
+     */
     public void editUserInfo(User user) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -101,6 +134,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Updates user's loyalty points quantity by id.
+     * @param userId of concrete user to be updated.
+     * @param newLoyaltyPointsValue user's current loyalty points quantity.
+     */
     public void updateLoyaltyPointsByUserId(long newLoyaltyPointsValue, int userId) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -117,6 +155,9 @@ public class UserService {
         }
     }
 
+    /**
+     * Count all users.
+     */
     public int countAllUsers() throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
             UserDao userDao = daoFactory.getUserDao();
@@ -126,6 +167,10 @@ public class UserService {
         }
     }
 
+    /**
+     * Count users by surname.
+     * @param surname users surname.
+     */
     public int countUsersBySurname(String surname) throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
             UserDao userDao = daoFactory.getUserDao();

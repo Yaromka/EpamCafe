@@ -65,6 +65,6 @@ public class ChangePasswordCommand implements Command{
         content.sessionInvalidate();
         content.setSessionAttributes(SessionAttr.USER, null);
         content.setSessionAttributes(SessionAttr.USER_TYPE, null);
-        return new RequestResult(LOGIN_PATH, NavigationType.REDIRECT);
+        return new RequestResult(LOGIN_PATH, NavigationType.FORWARD);
     }
 }

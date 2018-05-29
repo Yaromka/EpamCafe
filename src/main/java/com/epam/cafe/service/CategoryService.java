@@ -10,6 +10,9 @@ import java.util.List;
 
 public class CategoryService {
 
+    /**
+     * Returns all categories from table.
+     */
     @SuppressWarnings("unchecked")
     public List<Category> getAll() throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
@@ -20,6 +23,10 @@ public class CategoryService {
         }
     }
 
+    /**
+     * Add in DAO new category.
+     * @param  category object that should be inserted.
+     */
     public boolean addCategory(Category category) throws ServiceException {
         DaoFactory daoFactory = new DaoFactory();
         daoFactory.beginTransaction();
@@ -39,6 +46,10 @@ public class CategoryService {
         return addedCategory != null;
     }
 
+    /**
+     * Checks if category exists in DAO.
+     * @param categoryName name of category.
+     */
     public boolean isCategoryExist(String categoryName) throws ServiceException {
         try (DaoFactory daoFactory = new DaoFactory()){
             CategoryDao categoryDaoImpl = daoFactory.getCategoryDao();
@@ -50,6 +61,10 @@ public class CategoryService {
         }
     }
 
+    /**
+     * Returns concrete category from DAO by id.
+     * @param id primary key from the table.
+     */
     public Category getCategoryById(int id) throws ServiceException {
 
         try (DaoFactory daoFactory = new DaoFactory()){

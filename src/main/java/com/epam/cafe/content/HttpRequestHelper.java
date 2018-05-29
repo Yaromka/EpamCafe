@@ -12,24 +12,26 @@ public class HttpRequestHelper {
         this.content = content;
     }
 
-    public void getDataFromHttpRequest(HttpServletRequest request)
-    {
+    /**
+     * Add request attributes, parameters and session attributes in RequestContent object.
+     */
+    public void getDataFromHttpRequest(HttpServletRequest request) {
         setRequestAttributes(request);
         setRequestParameters(request);
         setSessionAttributes(request);
     }
 
-
-    public void addDataToHttpRequest(HttpServletRequest request)
-    {
+    /**
+     * Add attributes and session attributes to request from content.
+     */
+    public void addDataToHttpRequest(HttpServletRequest request) {
         Map<String, Object> requestAttributes = content.getRequestAttributes();
         Map<String, Object> sessionAttributes = content.getSessionAttributes();
         requestAttributes.forEach(request::setAttribute);
         sessionAttributes.forEach((key, value)-> request.getSession().setAttribute(key, value));
     }
 
-    private void setRequestAttributes(HttpServletRequest request)
-    {
+    private void setRequestAttributes(HttpServletRequest request) {
         Enumeration<String> requestAttributeNames = request.getAttributeNames();
 
         while (requestAttributeNames.hasMoreElements()) {
@@ -39,14 +41,12 @@ public class HttpRequestHelper {
         }
     }
 
-    private void setRequestParameters(HttpServletRequest request)
-    {
+    private void setRequestParameters(HttpServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         content.setRequestParameters(parameterMap);
     }
 
-    private void setSessionAttributes(HttpServletRequest request)
-    {
+    private void setSessionAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Enumeration<String> sessionAttributeNames = session.getAttributeNames();
 

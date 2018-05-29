@@ -14,6 +14,10 @@ public class DateTimeConverter {
     private static final SimpleDateFormat SDF_DATETIME = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private static final SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd");
 
+    /**
+     * Converts string to date time format by pattern.
+     * @param dateTime value to be converted.
+     */
     public static Date convertStringToDateTime(String dateTime) {
         Date orderDate;
         try{
@@ -27,6 +31,10 @@ public class DateTimeConverter {
         return orderDate;
     }
 
+    /**
+     * Converts string to date format by pattern.
+     * @param date value to be converted.
+     */
     public static Date convertStringToDate(String date) {
         Date orderDate;
         try{
@@ -40,6 +48,10 @@ public class DateTimeConverter {
         return orderDate;
     }
 
+    /**
+     * Converts date time format to string by pattern.
+     * @param date value to be converted.
+     */
     public static String convertDateTimeToString(Date date) {
         return SDF_DATETIME.format(date);
     }

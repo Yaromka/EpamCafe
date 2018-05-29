@@ -10,9 +10,9 @@ public class HashPasswordUtil {
     private HashPasswordUtil(){}
 
     /**
-     * Hashing password used sha1 algorithm.
-     * @param input - string for hashing
-     * @return hashing password
+     * Hashing password with a help of sha1 algorithm.
+     * @param input - password to be hashed.
+     * @return hashed password.
      */
     public static String sha1(String input){
         StringBuffer sb = new StringBuffer();

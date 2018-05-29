@@ -84,6 +84,6 @@ public class MakeOrderCommand implements Command{
         dishService.addDishesInOrder(order, dishesFromBasket);
         shopBasket.clean();
 
-        return new RequestResult(USER_ORDERS_PATH, NavigationType.REDIRECT);
+        return new RequestResult(USER_ORDERS_PATH, NavigationType.FORWARD);
     }
 }

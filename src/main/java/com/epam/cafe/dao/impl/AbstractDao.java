@@ -20,6 +20,10 @@ public abstract class AbstractDao <T extends AbstractEntity> {
         this.connection = connection;
     }
 
+    /**
+     * Returns entity with all fields filled.
+     * @param resultSet that has all information about concrete entity.
+     */
     public abstract T buildEntity(ResultSet resultSet);
 
     protected List<T> getList(String query) throws DAOException {

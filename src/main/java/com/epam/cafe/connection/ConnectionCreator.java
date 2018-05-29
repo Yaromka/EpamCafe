@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class ConnectionCreator {
     /**
-     * Returns initialized connection.]
+     * Returns initialized connection.
      */
     public static ConnectionProxy createConnection() throws ConnectionPoolException {
         try {

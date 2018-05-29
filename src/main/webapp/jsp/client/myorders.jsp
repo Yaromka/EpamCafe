@@ -98,9 +98,6 @@
                             </td>
 
                             <td>
-                                <c:if test="${order.orderStatus == 'PAID'}">
-                                    <fmt:message key="label.sort.paid" bundle="${rb}"/>
-                                </c:if>
                                 <c:if test="${order.orderStatus == 'CANCELED'}">
                                     <fmt:message key="label.sort.canceled" bundle="${rb}"/>
                                 </c:if>
@@ -109,6 +106,9 @@
                                 </c:if>
                                 <c:if test="${order.orderStatus == 'EXPECTED'}">
                                     <fmt:message key="label.sort.expected" bundle="${rb}"/>
+                                </c:if>
+                                <c:if test="${order.orderStatus == 'PAID'}">
+                                    <fmt:message key="label.sort.paid" bundle="${rb}"/>
                                 </c:if>
 
                             </td>
