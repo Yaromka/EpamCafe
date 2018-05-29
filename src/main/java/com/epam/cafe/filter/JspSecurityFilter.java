@@ -18,6 +18,13 @@ public class JspSecurityFilter implements Filter{
 
     }
 
+    /**
+     * Filter not allow to unauthorized address to JSP pages
+     * from browser line.
+     * @param servletRequest that comes from container.
+     * @param servletResponse that comes from container.
+     * @param filterChain chain of filters which check request.
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String mainPagePath = ConfigurationManager.getProperty(Paths.INDEX_PAGE);

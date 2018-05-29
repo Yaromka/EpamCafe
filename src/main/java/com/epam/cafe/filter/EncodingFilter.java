@@ -21,6 +21,12 @@ public class EncodingFilter implements Filter{
         code = filterConfig.getInitParameter("encoding");
     }
 
+    /**
+     * Check page encoding and set the right one if necessary.
+     * @param request that comes from container.
+     * @param response that comes from container.
+     * @param chain chain of filters which check request.
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {

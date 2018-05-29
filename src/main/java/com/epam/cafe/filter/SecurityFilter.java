@@ -22,6 +22,13 @@ public class SecurityFilter implements Filter {
 
     }
 
+    /**
+     * Checks access level for Admin, user and guest and rerouting response
+     * to main page if access level lower than necessary.
+     * @param servletRequest that comes from container.
+     * @param servletResponse that comes from container.
+     * @param filterChain chain of filters which check request.
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
